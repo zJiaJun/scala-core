@@ -20,7 +20,7 @@ object HelloAkka2 extends App {
   hello2 ! Greet("Alice")
   hello2 ! Greet("Marry")
   Thread sleep 1000
-  system terminate
+  system terminate()
 
   class Hello2 extends Actor {
     var greeting = ""

@@ -11,7 +11,7 @@ object HelloAkka extends App {
   val hello: ActorRef = system.actorOf(Props[Hello],"root")
   hello ! "zjiajun" //相当于 hello.tell("zjiajun",ActorRef.noSender)
   Thread sleep 1000
-  system terminate
+  system terminate()
 
 
   class Hello extends Actor {
