@@ -27,7 +27,7 @@ class RemoteActor extends Actor with ActorLogging {
       log.info("RECV packet: " +(id, seq, content))
       originalSender !(seq, content) // 响应给发送方消息处理结果，类似发送一个ACK
     }
-    case - =>
+    case _ =>
   }
 
 }
