@@ -89,6 +89,6 @@ object AkkaClientApplication extends App {
     Thread.sleep(300)
   }
 
-  system.terminate() // 终止本地ActorSystem系统x
+  system.terminate() // 终止本地ActorSystem系统
 
 }
