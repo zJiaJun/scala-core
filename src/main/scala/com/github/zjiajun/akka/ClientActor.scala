@@ -9,7 +9,7 @@ import akka.actor.{ActorLogging, Actor}
 class ClientActor extends Actor with ActorLogging {
 
   //akka.<protocol>://<actor system>@<hostname>:<port>/<actor path>
-  val path = "akka.tcp://remote-system@172.0.0.1:2552/user/remoteActor"
+  val path = "akka.tcp://remote-system@127.0.0.1:2552/user/remoteActor"
   val remoteActorRef = context.actorSelection(path)
 
   @volatile var connected = false
