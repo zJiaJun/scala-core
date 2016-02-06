@@ -1,28 +1,24 @@
 package com.github.zjiajun.impatient.charpter4
 
-import scala.collection.JavaConversions
-
 /**
  * Created by zhujiajun
  * 15/6/11 14:11
  */
-object Practice4 {
+object Practice4 extends App {
 
-  def main(args: Array[String]) : Unit = {
     val map = Map[String,Double]("T1"->10,"T2"->100,"T3"->487)
     val newMap = practiceOne(map)
     println(newMap)
-
     practiceSeven()
-  }
+
 
   def practiceOne(map : Map[String,Double]) = {
     for ((k,v)<-map) yield (k,v*0.9)
   }
 
-
   def practiceSeven() = {
-    val props = JavaConversions.propertiesAsScalaMap(System.getProperties())
+    import scala.collection.JavaConversions.propertiesAsScalaMap
+    val props: scala.collection.Map[String,String] = System.getProperties
     val keys = props.keySet
     println(keys)
     val keyLengths = for( key <- keys ) yield key.length
