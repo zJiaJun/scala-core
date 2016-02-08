@@ -8,7 +8,7 @@ object MathTest extends App {
 
   var sign = 0
   val ch :Char = '9'
-  var obj = 2
+  var obj:Any = 2
 
   ch match {
     case '+' => sign = 1
