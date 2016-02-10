@@ -53,6 +53,12 @@ object BaseCollections extends App {
   }
   println(result)
 
+  private val ints: List[Int] = numbers.map((i: Int) => i * 2)
+  println(ints)
+  private val foreach: Unit = numbers.foreach(_ * 2) //没有返回值
+  println(foreach)
+
+  private val left: Int = numbers.foldLeft(0)((m: Int, n: Int) => m + n) //10
 
 
 
