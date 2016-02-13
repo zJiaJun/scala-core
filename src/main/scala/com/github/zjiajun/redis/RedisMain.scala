@@ -1,7 +1,11 @@
 package com.github.zjiajun.redis
 
+import java.util
+
 import com.typesafe.config.ConfigFactory
 import redis.clients.jedis.{Jedis, JedisShardInfo}
+
+import scala.collection.{mutable, JavaConversions}
 
 /**
   * Created by zhujiajun
@@ -41,5 +45,12 @@ object RedisMain extends App {
   listThread.join()
 
   for (i <- 0 to 50) println(jedis.rpop("listKey"))
+
+  jedis.hset("h:Key","h:Field","fieldValue")
+
+  private val hgetAll: util.Map[String, String] = jedis.hgetAll("h:Key")
+  println(hgetAll)
+  private val scalaMap: mutable.Map[String, String] = JavaConversions.mapAsScalaMap(hgetAll)
+  println(scalaMap)
 
 }
