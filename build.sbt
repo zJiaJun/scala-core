@@ -16,5 +16,6 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-remote"      % AKKA_VERSION,
   "com.typesafe.akka" %% "akka-contrib"     % AKKA_VERSION,
   "com.typesafe.akka" %% "akka-slf4j"       % AKKA_VERSION,
-  "redis.clients"     %  "jedis"            % JEDIS_VERSION
+  "redis.clients"     %  "jedis"            % JEDIS_VERSION,
+  "mysql"             %   "mysql-connector-java" % "5.1.36"
 )
