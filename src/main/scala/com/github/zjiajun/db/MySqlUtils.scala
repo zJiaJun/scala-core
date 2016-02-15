@@ -4,7 +4,7 @@ import java.sql._
 
 /**
   * Created by zhujiajun
-  * 16/2/14 21:26
+  * 16/2/14 21:28
   */
 object MySqlUtils extends App {
 
