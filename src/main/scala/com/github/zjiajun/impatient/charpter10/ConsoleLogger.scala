@@ -1,4 +1,4 @@
-package scala.charpter10
+package com.github.zjiajun.impatient.charpter10
 
 /**
  * Created by zhujiajun

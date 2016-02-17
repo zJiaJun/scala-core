@@ -1,4 +1,4 @@
-package scala.charpter4
+package com.github.zjiajun.impatient.charpter4
 
 import scala.collection.JavaConversions
 

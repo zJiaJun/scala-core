@@ -1,4 +1,4 @@
-package scala.charpter12
+package com.github.zjiajun.impatient.charpter12
 
 import com.github.zjiajun.{TInterface, TClass}
 
