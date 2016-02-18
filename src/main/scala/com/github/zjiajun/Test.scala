@@ -1,5 +1,9 @@
 package com.github.zjiajun
 
+import com.typesafe.config.{Config, ConfigFactory}
+
+import scala.collection.mutable.ListBuffer
+
 /**
   * Created by zhujiajun
   * 16/2/17 15:21
@@ -13,5 +17,20 @@ object Test extends App {
   } else "ooo"
 
   println(crid_2)
+
+
+  val url = ListBuffer[String]()
+  url += "www.baidu.com"
+  url.+=: ("www.yahoo.com")
+  url += "www.google.com"
+  println(url)
+
+  val config: Config = ConfigFactory.load
+  val redisHost = if (config.hasPath("redis.host")) config.getString("redis.host") else "127.0.0.100"
+  println(redisHost)
+
+  val zkConfig: Config = ConfigFactory.load("example")
+  println(zkConfig.getString("zookeeper.host"))
+  println(zkConfig.getInt("zookeeper.port"))
 
 }
