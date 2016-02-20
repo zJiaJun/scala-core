@@ -33,4 +33,10 @@ object Test extends App {
   println(zkConfig.getString("zookeeper.host"))
   println(zkConfig.getInt("zookeeper.port"))
 
+  def fuzhi() {
+    var s = 100
+    s = 10 //赋值动作本身是没有值的,Unit类型()
+  }
+  println(fuzhi())
+
 }
