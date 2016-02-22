@@ -39,4 +39,10 @@ object Test extends App {
   }
   println(fuzhi())
 
+  for (i <- 0 to 10 reverse) println(i)
+  println("---")
+  for (i <- 1 to 3; j <- 1 to 3) println(10 * i + j)
+  println("---")
+  for (i <- 1 to 3; j <- 1 to 3 if i != j) println(10 * i + j)
+
 }
