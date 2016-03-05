@@ -30,4 +30,10 @@ object Param extends App {
     println(str)
 
 
+  def box(s: String) {
+    val border = "-" * s.length + "--\n"
+    println(border + "|" + s + "|\n" + border)
+  }
+
+  box("hello")
 }
