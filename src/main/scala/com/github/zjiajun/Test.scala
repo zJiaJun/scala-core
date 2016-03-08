@@ -45,4 +45,16 @@ object Test extends App {
   println("---")
   for (i <- 1 to 3; j <- 1 to 3 if i != j) println(10 * i + j)
 
+  def test(id: String, t: String): String = {
+    val aid = ""
+    t match {
+      case "001" => return "1"
+      case "002" => return "2"
+      case _     => return "0"
+    }
+    aid
+  }
+
+  println(test("1","002"))
+
 }
