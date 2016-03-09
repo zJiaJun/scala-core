@@ -30,5 +30,11 @@ object OtvDealIdTest extends App {
   println(union100)
   println(union200)
 
+  val aId = "6B225EC84E88311C"
+
+  val end1 = union100.toList.map(_ + aId)
+  val end2 = union200.toList.map(_ + aId)
+  println(end1)
+  println(end2)
 
 }
