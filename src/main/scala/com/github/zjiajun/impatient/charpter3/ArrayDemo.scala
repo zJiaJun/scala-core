@@ -1,6 +1,7 @@
 package com.github.zjiajun.impatient.charpter3
 
 import scala.collection.mutable.ArrayBuffer
+import scala.io.Source}
 
 /**
   * Created by zhujiajun
@@ -79,5 +80,28 @@ object ArrayDemo extends App {
   val sw = aa.sortWith(_ > _) //提供一个比较函数
   println(sw.mkString("<",",",">")) // <3,2,1>
 
+  val matrix = Array.ofDim[Int](2,3) //2行 3列
+  //Array[Array[Int]] = Array(Array(0, 0, 0), Array(0, 0, 0))
+  matrix(0)(0) = 1 //第1行 第1列=1 Array(Array(1, 0, 0), Array(0, 0, 0))
+  matrix(1)(0) = 4 //第2行 第1列=4 Array(Array(1, 0, 0), Array(4, 0, 0))
+  println(matrix(0).mkString("-")) //1-0-0
+  println(matrix(1).mkString("-")) //4-0-0
+
+  import scala.collection.JavaConversions.bufferAsJavaList //buffer转javaList
+  import scala.collection.mutable.ArrayBuffer
+  val command = ArrayBuffer("ls","-all","/")
+  /* 构建java原生的List
+  val list = new java.util.ArrayList[String]()
+  list.add("jps")
+  */
+  val pb = new ProcessBuilder(command) //入参是List[String],ArrayBuffer被隐式转换成java的List
+  val process = pb.start()
+  val stream = Source.fromInputStream(process.getInputStream,"UTF-8")
+  println(stream.mkString)
+
+  import scala.collection.JavaConversions.asScalaBuffer //返回List,自动转换成一个Buffer,注意不是ArrayBuffer
+  import scala.collection.mutable.Buffer
+  val buffer: Buffer[String] = pb.command() //return List[String] => Buffer[String]
+  println(buffer.mkString)
 
 }
