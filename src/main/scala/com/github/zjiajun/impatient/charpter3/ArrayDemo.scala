@@ -1,7 +1,7 @@
 package com.github.zjiajun.impatient.charpter3
 
 import scala.collection.mutable.ArrayBuffer
-import scala.io.Source}
+import scala.io.Source
 
 /**
   * Created by zhujiajun
