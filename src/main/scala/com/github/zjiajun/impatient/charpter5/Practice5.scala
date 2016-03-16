@@ -15,7 +15,7 @@ class Time (val hours:Int,val minutes:Int) {
 
 }
 
-class Practice5(a : String)  {
+class Practice5(val a : String)  {
 
   def this(name : String,age : Int) {
     this("aa")
@@ -25,7 +25,7 @@ class Practice5(a : String)  {
 
 }
 
-object Practice5 extends App{
+object Practice5 extends App {
 
   def apply(x : Int) = {
     new Practice5("name",x)

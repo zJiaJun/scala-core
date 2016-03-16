@@ -8,7 +8,7 @@ import scala.beans.BeanProperty
  */
 class PrivateObj private (val name :String) { outer =>
 
-  var age : Int = 0;
+  var age : Int = 0
 
   def this(age :Int) {
     this("1")
@@ -40,9 +40,8 @@ class ScalaObject(@BeanProperty var pValue : Int = 2) extends PrivateObj(1) {
   }
 }
 
-object ScalaObject {
+object ScalaObject extends App {
 
-  def main(args: Array[String]) {
     val scalaObj = new ScalaObject
     scalaObj.increment()
     val value = scalaObj.current
@@ -55,19 +54,21 @@ object ScalaObject {
     scalaObj.setPValue(2)
 
     val aa = new PrivateObj(1)
+    println(s"PrivateObj age : ${aa.age}")
+    aa.age = 90
+    println(s"PrivateObj age : ${aa.age}")
 
     val x =  Practice5(100)
-
+    println(x.a)
     println(aa)
 
-    if(scalaObj.isInstanceOf[PrivateObj]) {
-      val l = scalaObj.asInstanceOf[PrivateObj]
-      println(l.toString)
+    scalaObj match {
+      case l: PrivateObj =>
+        println(l.toString)
+      case _ =>
     }
 
     println(scalaObj.getClass)
     val s = scalaObj.getClass == classOf[PrivateObj]
     println(s)
-
-  }
 }
