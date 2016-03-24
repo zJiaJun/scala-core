@@ -37,4 +37,11 @@ object OtvDealIdTest extends App {
   println(end1)
   println(end2)
 
+
+  val set = new java.util.HashSet[String]()
+  set.add("201603171839")
+
+  val dealId = "201603171839"
+  println(set.contains(dealId))
+
 }
