@@ -14,17 +14,11 @@ object Week01 extends App {
 
   def sqrt(y: Double, x: Double): Double = {
     if (x <= 0 || y <= 0) throw new IllegalArgumentException()
-    var value: Double = 0
-    var result: Double = 0
-    value = (y + (x / y)) / 2
+    val value = (y + (x / y)) / 2
     println(value)
-    if (math.abs(value - y) > 0.001) {
-      result = sqrt(value,x)
-    } else {
-      result = value
-    }
-    result
+    if (math.abs(value - y) > 0.001) sqrt(value,x) else value
   }
+
   println(sqrt(1,2))
 }
 
