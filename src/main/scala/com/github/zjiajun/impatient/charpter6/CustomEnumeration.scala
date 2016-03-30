@@ -6,6 +6,7 @@ package com.github.zjiajun.impatient.charpter6
  */
 object CustomEnumeration extends Enumeration with App {
 
+  type CustomEnumeration = CustomEnumeration.Value
   val Red = Value
   val Yellow = Value("yellow")
   val Green = Value(2,"green")
