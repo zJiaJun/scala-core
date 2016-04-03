@@ -1,7 +1,5 @@
 package com.github.zjiajun.impatient.charpter8
 
-import java.lang.System
-
 /**
   * Created by zhujiajun
   * 16/4/3 19:44
