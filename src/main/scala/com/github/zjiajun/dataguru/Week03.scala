@@ -24,7 +24,18 @@ object Week03 extends App {
   val other = "Whatever."
 
   def autoBob(str: String): String = {
-    ""
+    val length = str.trim.length
+    if (length == 0) fine
+    else if (str.toUpperCase == str && str.toLowerCase == str) other
+    else if (str.toUpperCase == str) whoa
+    else if (str.toUpperCase != str && str(length - 1) == '?') sure
+    else other
   }
+
+  println(autoBob("WATCH OUT!"))
+  println(autoBob("Do you speak English?"))
+  println(autoBob("DO YOU HEAR ME?"))
+  println(autoBob("What DID you do?"))
+  println(autoBob("  "))
 
 }
