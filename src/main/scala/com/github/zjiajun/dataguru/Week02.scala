@@ -42,6 +42,26 @@ object Week02 extends App {
   println(balance(chars))
 
 
+  val list = List(1,2,3)
+  def plist(list: List[Int]): Unit = {
+    list match {
+      case Nil => println("Nil")
+      case head::tail =>
+        println("value " + head)
+        plist(tail)
+    }
+  }
+
+  plist(list)
+
+
+
+
+
+
+
+
+
 
 
 
