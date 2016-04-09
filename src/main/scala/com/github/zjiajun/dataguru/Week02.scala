@@ -55,6 +55,17 @@ object Week02 extends App {
 
   plist(list)
 
+  val m = Map(1 -> "a", 2 -> "b")
+  for ((k,v) <- m) {
+    println(k)
+    println(v)
+  }
+
+  for (tuple <- m) {
+    println(tuple._1)
+    println(tuple._2)
+  }
+
 
 
 
