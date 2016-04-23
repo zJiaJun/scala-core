@@ -15,7 +15,7 @@ object Week05 extends App {
 
   val school = new mutable.HashMap[String,Int]
 
-  school += ("Tom" -> 1, "Jim" -> 2, "Leon" -> 3)
+  school += ("Tom" -> 1, "Jim" -> 2, "Leon" -> 3, "Marry" -> 5)
 
   println(school)
 
@@ -29,6 +29,14 @@ object Week05 extends App {
 
   println(school.getOrElse("Leon",3))
 
+  def getStudByGrade(grade: Int) = {
+    school.keys.foreach { k =>
+      if (school(k) == grade)
+        println(k)
+    }
+  }
+
+  getStudByGrade(5)
 
 
 }
