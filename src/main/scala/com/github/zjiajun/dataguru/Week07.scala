@@ -27,7 +27,7 @@ object Week07 extends App {
       "Student_4" -> (21, s_flag, 3, 70)
     )
 
-    def printMap = {
+    def printMap() = {
       println("Print Map Begin")
       map.foreach(println)
       println("Print Map End")
@@ -56,7 +56,7 @@ object Week07 extends App {
   val p = new Person with Student with Teacher
   p.add("Student_5",22,3,60)
   p.update("Student_3",22,3,50)
-  p.printMap
+  p.printMap()
 
   p.add("Teacher_4",50)
   p.update("Teacher_3",55)
