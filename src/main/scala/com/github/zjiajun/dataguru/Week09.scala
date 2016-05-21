@@ -7,6 +7,8 @@ import akka.actor._
 /**
   * Created by zhujiajun
   * 16/5/21 14:49
+  *
+  * 用akka改写学校管理的作业，要求增删改后的内容保存至磁盘文件
   */
 object Week09 extends App {
 
