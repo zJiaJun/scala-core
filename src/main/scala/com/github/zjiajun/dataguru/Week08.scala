@@ -9,6 +9,13 @@ import scala.util.{Failure, Success}
 /**
   * Created by zhujiajun
   * 16/5/15 10:26
+  *
+  * Scala中，可以通过一个Callable[E]来实现线程返回值。通常的做法，是
+  * 创建一个带返回类型的函数，通过该函数创建一个Future
+  *
+  * 将上周的学校管理系统改写成一个服务端程序（不需要做RPC或者Restful接口，假设前面有这类封装），
+  * 将对内存中保存的学生老师信息进行多线程处理（每个管理接口接受请求后，生成一个Future，进行多线程运行，
+  * 可以用lock.synchronized对一个body: => Unit代码段进行多线程的保护
   */
 class Week08(key: String, age: Int) extends Runnable {
 
