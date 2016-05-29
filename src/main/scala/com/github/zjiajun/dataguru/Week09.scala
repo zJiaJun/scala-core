@@ -26,7 +26,7 @@ object Week09 extends App {
        key: String,
        value: (Int, String, Int, Int))
 
-  case class saveSchool(
+  case class SaveSchool(
          schoolMap: Map[String,(Int, String, Int, Int)])
 
   val system = ActorSystem("schoolSystem")
@@ -42,7 +42,7 @@ object Week09 extends App {
     override def receive = {
 
       case CRUDSchool(flag,schoolMap,key,value) =>
-        saveFileActor ! saveSchool(
+        saveFileActor ! SaveSchool(
           flag match {
             case "C" =>
               log.info(s"Add map key : $key, value : $value")
@@ -65,7 +65,7 @@ object Week09 extends App {
 
     override def receive = {
 
-      case saveSchool(m) =>
+      case SaveSchool(m) =>
         log.info(s"Save file to : ${file.getAbsolutePath}")
         printWriter.write(m.mkString("\n"))
     }

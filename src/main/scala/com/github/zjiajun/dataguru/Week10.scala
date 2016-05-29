@@ -1,6 +1,7 @@
 package com.github.zjiajun.dataguru
 
 import java.io.{File, PrintWriter}
+import java.util.concurrent.CountDownLatch
 
 import akka.actor.SupervisorStrategy.{Escalate, Restart, Resume, Stop}
 import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, AllForOneStrategy, OneForOneStrategy, Props, SupervisorStrategy}
@@ -27,14 +28,15 @@ object Week10 extends App {
                          key: String,
                          value: (Int, String, Int, Int))
 
-  case class saveSchool(
+  case class SaveSchool(
                          schoolMap: Map[String,(Int, String, Int, Int)])
 
 
   val system = ActorSystem("watchSchoolSystem")
   val supervisorActor = system.actorOf(Props[SupervisorActor],"supervisorActor")
-  supervisorActor ! CRUDSchool("C",school,"Student_2",(19,"S",3,1230))
-  Thread sleep 3000
+  supervisorActor ! CRUDSchool("C",school,"Student_2",(19,"S",3,88))
+  val latch = new CountDownLatch(1)
+  latch.await() //等待保存磁盘成功,否则一只等待
   println("Stop Actor System")
   system.terminate()
 
@@ -47,6 +49,11 @@ object Week10 extends App {
       case msg : CRUDSchool => crudActor ! msg
     }
 
+    /**
+      * 在这个例子中使用Restart重建actor策略
+      * 原因: 当修改完老师或学生信息后,可能文件在磁盘中不存在或者磁盘满了
+      *       等手动工创建文件或者清理磁盘后,重试操作便可以成功
+      */
     override def supervisorStrategy: SupervisorStrategy = OneForOneStrategy() {
       case e: Exception => Restart
       case _ => Stop
@@ -55,39 +62,38 @@ object Week10 extends App {
 
   class CRUDActor(saveFileActor: ActorRef) extends Actor with ActorLogging {
 
-    println("CRUDActor Constructor")
+    log.info("CRUDActor Constructor")
     var className: String = null
 
     @scala.throws[Exception](classOf[Exception])
     override def preStart(): Unit = {
       className = getClass.getSimpleName + File.separator
-      println(className + "PreStart")
+      log.info(className + "PreStart")
     }
 
     @scala.throws[Exception](classOf[Exception])
     override def preRestart(reason: Throwable, message: Option[Any]): Unit = {
-      println(className + "PreRestart")
-      println(getClass.getSimpleName + "Exception Msg : " + reason.getMessage)
-      println(getClass.getSimpleName + "Msg : " + message)
-      sender() ! message
+      log.info(className + "PreRestart")
+      log.info(getClass.getSimpleName + "Exception Msg : " + reason.getMessage)
+      log.info(getClass.getSimpleName + "Msg : " + message)
       super.preRestart(reason, message)
     }
 
     @throws[Exception](classOf[Exception])
     override def postStop(): Unit = {
-      println(className + "PostStop")
+      log.info(className + "PostStop")
     }
 
 
     @scala.throws[Exception](classOf[Exception])
     override def postRestart(reason: Throwable): Unit = {
       super.postRestart(reason) //先调用preStart,初始化className
-      println(className + "PostRestart")
+      log.info(className + "PostRestart")
     }
 
     override def receive = {
       case CRUDSchool(flag,schoolMap,key,value) =>
-        saveFileActor ! saveSchool(
+        saveFileActor ! SaveSchool(
           flag match {
             case "C" =>
               log.info(s"Add map key : $key, value : $value")
@@ -105,52 +111,66 @@ object Week10 extends App {
 
   class SaveFileActor(filePath: String) extends Actor with ActorLogging {
 
-    println("SaveFileActor Constructor")
+    log.info("SaveFileActor Constructor")
     val file = new File(filePath + File.separator + "school.tmp")
-
     var className: String = null
 
 
     @scala.throws[Exception](classOf[Exception])
     override def preStart(): Unit = {
       className = getClass.getSimpleName + File.separator
-      println(className + "PreStart")
+      log.info(className + "PreStart")
     }
 
+    /**
+      * 如果调用super.preRestart(),会停止监控并停止子actor,然后调用postStop
+      * 接着执行构造器,然后执行postRestart
+      *
+      * @param reason Exception
+      * @param message actor message
+      */
     @scala.throws[Exception](classOf[Exception])
     override def preRestart(reason: Throwable, message: Option[Any]): Unit = {
-      println(className + "PreRestart")
-      println(className + "Exception Msg : " + reason.getMessage)
-      println(className + "Msg : " + message)
-      println("重试")
+      log.info(className + "PreRestart")
+      log.info(className + "Exception Msg : " + reason.getMessage)
+      log.info(className + "Msg : " + message)
+      message match {
+        case Some(msg) => self ! msg.asInstanceOf[SaveSchool] //注意这里需要转类型,被坑了好久
+        case None      => log.info(className + "PreRestart message is None")
+      }
       Thread sleep 5000
-      self ! message //TODO has pro
-      println("重试完成")
       super.preRestart(reason, message)
     }
 
 
     @throws[Exception](classOf[Exception])
     override def postStop(): Unit = {
-      println(className + "PostStop")
+      log.info(className + "PostStop")
     }
 
-
+    /**
+      * 如果调用super.postRestart(),会先执行preStart
+      * 如果不需要恢复actor状态,可以不调用
+ *
+      * @param reason Exception
+      */
     @scala.throws[Exception](classOf[Exception])
     override def postRestart(reason: Throwable): Unit = {
       super.postRestart(reason)
-      println(className + "PostRestart")
+      log.info(className + "PostRestart")
     }
 
     override def receive = {
-      case saveSchool(m) =>
-        if (!file.exists()) { //文件不存在,抛异常,休眠5S,创建文件
+      case SaveSchool(m) =>
+        log.info(this.toString)
+        if (!file.exists()) { //文件不存在,抛异常,休眠5S,手动创建文件后,下次执行成功
           throw new IllegalArgumentException("File path is wrong")
         }
         log.info(s"Save file to : ${file.getAbsolutePath}")
         val printWriter = new PrintWriter(file)
         printWriter.write(m.mkString("\n"))
         printWriter.close()
+        latch.countDown()
     }
   }
 }
