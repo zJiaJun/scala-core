@@ -4,10 +4,6 @@ version := "1.0"
 
 scalaVersion := "2.11.7"
 
-resolvers ++= Seq(
-  "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
-)
-
 libraryDependencies ++= {
   val akkaV = "2.4.1"
   val jedisV = "2.8.0"
@@ -20,8 +16,8 @@ libraryDependencies ++= {
     "com.typesafe.akka" %% "akka-slf4j" % akkaV,
     "redis.clients" % "jedis" % jedisV,
     "mysql" % "mysql-connector-java" % "5.1.36",
-    "org.json4s" %% "json4s-jackson" % json4sV,
-    "org.json4s" %% "json4s-native" % json4sV,
+    "org.json4s" %% "json4s-jackson" % json4sV excludeAll ExclusionRule(organization = "org.scala-lang"),
+    "org.json4s" %% "json4s-native" % json4sV excludeAll ExclusionRule(organization = "org.scala-lang"),
     "com.alibaba" % "fastjson" %  fastjsonV
   )
 }
