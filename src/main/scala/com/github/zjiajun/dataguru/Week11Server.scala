@@ -6,6 +6,7 @@ import akka.actor.Actor.Receive
 import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
 import akka.io.Tcp._
 import akka.io.{IO, Tcp}
+import akka.routing.{ActorRefRoutee, RandomRoutingLogic, Router}
 import akka.util.{ByteString, ByteStringBuilder}
 
 /**
@@ -16,6 +17,8 @@ import akka.util.{ByteString, ByteStringBuilder}
   *  1、数据查询
   *  2、数据的增删改
   *  均通过TCP连接由客户端发出请求，服务器端执行
+  *
+  *  Week12 修改你上周的作业，用router对查询的工作进行负载均衡
   */
 object Week11Server extends App {
 
@@ -56,6 +59,16 @@ class ServerService(endpoint: InetSocketAddress) extends Actor with ActorLogging
 
 class ServerHandler extends Actor with ActorLogging {
 
+  val router = {
+    val routees = Vector.fill(5) {
+      val r = context.actorOf(Props[QueryHandler])
+      context.watch(r)
+      ActorRefRoutee(r)
+    }
+    Router(RandomRoutingLogic(),routees)
+  }
+
+
   override def receive: Receive = {
 
     case Received(byteString) => //5.接收客户端信息
@@ -64,18 +77,33 @@ class ServerHandler extends Actor with ActorLogging {
       val content = byteString.decodeString("UTF-8")
       log.info("Received from client {}", content)
 
-      val response = content match {
-        case "query" => s"query success ${Week11Server.school.toString()}"
-        case "add" => s"add success ${(Week11Server.school + ("Student_2" ->(19, "S", 3, 99))).toString()}"
-        case "delete" => s"delete success ${(Week11Server.school - "Teacher_1").toString()}"
-        case "update" => s"update success ${(Week11Server.school + ("Student_1" ->(18, "S", 3, 80))).toString()}"
+       content match {
+//        case "query" => s"query success ${Week11Server.school.toString()}"
+        case "query" => router.route("query",sender())
+        case "add" => sender() ! Write(ByteString(
+          s"add success ${(Week11Server.school + ("Student_2" ->(19, "S", 3, 99))).toString()}"))
+        case "delete" => sender() ! Write(ByteString(
+          s"delete success ${(Week11Server.school - "Teacher_1").toString()}"))
+        case "update" => sender() ! Write(ByteString(
+          s"update success ${(Week11Server.school + ("Student_1" ->(18, "S", 3, 80))).toString()}"))
       }
-
-      sender() ! Write(ByteString(response)) //6.发送给客户端
 
     case PeerClosed =>
       log.info("PeerClosed stop self")
       context stop self
   }
+}
+
+class QueryHandler extends Actor with ActorLogging {
+
+  override def receive: Receive = {
+    case "query" => {
+      log.info("QueryHandler " + sender())
+      log.info("QueryHandler self" + this.toString)
+      sender() ! Write(ByteString(s"query success ${Week11Server.school.toString()}"))
+    }
+
+  }
+
 }
 

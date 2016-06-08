@@ -20,6 +20,8 @@ import scala.concurrent.duration._
   *  2、数据的增删改
   *  均通过TCP连接由客户端发出请求，服务器端执行
   *
+  *  修改你上周的作业，用router对查询的工作进行负载均衡
+  *
   */
 object Week11Client extends App {
 
@@ -28,10 +30,10 @@ object Week11Client extends App {
   val clientService = actorSystem.actorOf(Props(classOf[ClientService],endpoint),"clientService")
 
   import ExecutionContext.Implicits.global
-  actorSystem.scheduler.scheduleOnce(1 seconds,clientService,"query")
   actorSystem.scheduler.scheduleOnce(3 seconds,clientService,"add")
   actorSystem.scheduler.scheduleOnce(5 seconds,clientService,"update")
   actorSystem.scheduler.scheduleOnce(7 seconds,clientService,"delete")
+  actorSystem.scheduler.schedule(10 seconds,3 seconds,clientService,"query")
 
 }
 
