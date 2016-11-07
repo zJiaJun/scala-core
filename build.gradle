@@ -1,33 +1,36 @@
-apply plugin: 'scala'
-apply plugin: 'idea'
+subprojects {
+	apply plugin: 'scala'
 
-version = 1.0
-
-repositories {
-	mavenCentral()
-}
-
-dependencies {
-	compile 'org.scala-lang:scala-library:2.11.7'
-	compile 'com.typesafe.akka:akka-actor_2.11:2.4.1'
-	compile 'com.typesafe.akka:akka-remote_2.11:2.4.1'
-	compile 'com.typesafe.akka:akka-contrib_2.11:2.4.1'
-	compile 'com.typesafe.akka:akka-slf4j_2.11:2.4.1'
-	compile 'redis.clients:jedis:2.8.0'
-	compile 'mysql:mysql-connector-java:5.1.36'
-	compile 'org.json4s:json4s-jackson_2.11:3.2.11'
-	compile 'org.json4s:json4s-native_2.11:3.2.11'
-	compile 'com.alibaba:fastjson:1.2.8'
-	testCompile 'junit:junit:4.12'
-}
-
-tasks.withType(ScalaCompile) {
-	configure(scalaCompileOptions.forkOptions) {
-		memoryMaximumSize = '1g'
+	repositories {
+		mavenCentral()
 	}
+
+	group = 'com.github.zjiajun'
+	version = 1.0
+
+	dependencies {
+		compile 'org.scala-lang:scala-library:2.11.7'
+		compile 'com.typesafe.akka:akka-actor_2.11:2.4.1'
+		compile 'com.typesafe.akka:akka-remote_2.11:2.4.1'
+		compile 'com.typesafe.akka:akka-contrib_2.11:2.4.1'
+		compile 'com.typesafe.akka:akka-slf4j_2.11:2.4.1'
+		compile 'redis.clients:jedis:2.8.0'
+		compile 'mysql:mysql-connector-java:5.1.36'
+		compile 'org.json4s:json4s-jackson_2.11:3.2.11'
+		compile 'org.json4s:json4s-native_2.11:3.2.11'
+		compile 'com.alibaba:fastjson:1.2.8'
+		testCompile 'junit:junit:4.12'
+	}
+
+	tasks.withType(ScalaCompile) {
+		configure(scalaCompileOptions.forkOptions) {
+			memoryMaximumSize = '1g'
+			jvmArgs = ['-XX:MaxPermSize=512m']
+		}
+	}
+	ScalaCompileOptions.metaClass.daemonServer = true
+	ScalaCompileOptions.metaClass.fork = true
+	ScalaCompileOptions.metaClass.useAnt = true
+	ScalaCompileOptions.metaClass.useCompileDaemon = false
 }
-ScalaCompileOptions.metaClass.daemonServer = true
-ScalaCompileOptions.metaClass.fork = true
-ScalaCompileOptions.metaClass.useAnt = true
-ScalaCompileOptions.metaClass.useCompileDaemon = false
 
