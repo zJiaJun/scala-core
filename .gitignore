@@ -6,6 +6,7 @@
 
 ## Directory-based project format:
 .idea/
+build/
 # if you remove the above rule, at least ignore the following:
 
 # User-specific stuff:
@@ -21,8 +22,9 @@
 # .idea/uiDesigner.xml
 
 # Gradle:
-# .idea/gradle.xml
-# .idea/libraries
+.idea/gradle.xml
+.idea/libraries
+.gradle
 
 # Mongo Explorer plugin:
 # .idea/mongoSettings.xml
