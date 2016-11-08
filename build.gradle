@@ -1,3 +1,23 @@
+buildscript {
+
+
+}
+
+apply plugin: 'idea'
+ext {
+	scalaVersion = '2.11.7'
+	scalaLibVersion = '2.11'
+	akkaGroup = 'com.typesafe.akka'
+	akkaVersion = '2.4.1'
+	mysqlVersion = '5.1.36'
+}
+
+List akka = ["$akkaGroup:akka-actor_$scalaLibVersion:$akkaVersion",
+			 "$akkaGroup:akka-remote_$scalaLibVersion:$akkaVersion",
+			 "$akkaGroup:akka-contrib_$scalaLibVersion:$akkaVersion",
+			 "$akkaGroup:akka-slf4j_$scalaLibVersion:$akkaVersion"]
+
+
 subprojects {
 	apply plugin: 'scala'
 
@@ -9,16 +29,13 @@ subprojects {
 	version = 1.0
 
 	dependencies {
-		compile 'org.scala-lang:scala-library:2.11.7'
-		compile 'com.typesafe.akka:akka-actor_2.11:2.4.1'
-		compile 'com.typesafe.akka:akka-remote_2.11:2.4.1'
-		compile 'com.typesafe.akka:akka-contrib_2.11:2.4.1'
-		compile 'com.typesafe.akka:akka-slf4j_2.11:2.4.1'
-		compile 'redis.clients:jedis:2.8.0'
-		compile 'mysql:mysql-connector-java:5.1.36'
-		compile 'org.json4s:json4s-jackson_2.11:3.2.11'
-		compile 'org.json4s:json4s-native_2.11:3.2.11'
-		compile 'com.alibaba:fastjson:1.2.8'
+		compile "org.scala-lang:scala-library:$scalaVersion"
+		compile akka
+		compile "redis.clients:jedis:2.8.0"
+		compile "mysql:mysql-connector-java:$mysqlVersion"
+		compile "org.json4s:json4s-jackson_$scalaLibVersion:3.2.11"
+		compile "org.json4s:json4s-native_$scalaLibVersion:3.2.11"
+		compile "com.alibaba:fastjson:1.2.8"
 		testCompile 'junit:junit:4.12'
 	}
 
