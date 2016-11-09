@@ -1,5 +1,0 @@
-description = 'core'
-
-jar {
-    baseName = 'scala-core'
-}

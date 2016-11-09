@@ -40,14 +40,33 @@ subprojects {
 	}
 
 	tasks.withType(ScalaCompile) {
+		scalaCompileOptions.additionalParameters = [
+		        "-encoding","utf-8",
+				"-unchecked"
+		]
+
 		configure(scalaCompileOptions.forkOptions) {
 			memoryMaximumSize = '1g'
-			jvmArgs = ['-XX:MaxPermSize=512m']
+			jvmArgs = ['-Xss2m','-XX:MaxPermSize=512m']
 		}
 	}
 	ScalaCompileOptions.metaClass.daemonServer = true
 	ScalaCompileOptions.metaClass.fork = true
 	ScalaCompileOptions.metaClass.useAnt = true
 	ScalaCompileOptions.metaClass.useCompileDaemon = false
+}
+
+project(':core') {
+	archivesBaseName = "core"
+	jar {
+		baseName = 'scala-core'
+	}
+}
+
+project(':dataguru') {
+	archivesBaseName = "dataguru"
+	jar {
+		baseName = 'scala-dataguru'
+	}
 }
 
