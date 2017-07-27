@@ -9,7 +9,7 @@ import scala.util.{Failure, Success}
   */
 object FutureExample extends App {
 
-//  import scala.concurrent.ExecutionContext.Implicits.global
+  import scala.concurrent.ExecutionContext.Implicits.global
 
    val future: Future[String] = Future {
     println("begin future")
