@@ -5,7 +5,7 @@ buildscript {
 
 apply plugin: 'idea'
 ext {
-	scalaVersion = '2.11.7'
+	scalaVersion = '2.11.11'
 	scalaLibVersion = '2.11'
 	akkaGroup = 'com.typesafe.akka'
 	akkaVersion = '2.4.1'
