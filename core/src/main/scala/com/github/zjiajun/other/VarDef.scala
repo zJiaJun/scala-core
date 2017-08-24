@@ -1,4 +1,4 @@
-package com.github.zjiajun.`def`.`var`
+package com.github.zjiajun.other
 
 /**
   * @author zhujiajun
