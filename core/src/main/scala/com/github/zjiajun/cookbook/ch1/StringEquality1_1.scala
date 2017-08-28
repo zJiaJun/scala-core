@@ -4,7 +4,7 @@ package com.github.zjiajun.cookbook.ch1
   * @author zhujiajun
   * @since 2017/8/27
   */
-object StringEquality extends App {
+object StringEquality1_1 extends App {
 
   val s1 = "Hello"
   val s2 = "Hello"
