@@ -4,7 +4,7 @@ package com.github.zjiajun.cookbook.ch1
   * @author zhujiajun
   * @since 2017/8/28
   */
-object SplittingStrings extends App {
+object SplittingStrings1_3 extends App {
 
   val line = "eggs, milk, butter, Coco Puffs"
 
