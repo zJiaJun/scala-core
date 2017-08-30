@@ -33,6 +33,11 @@ object VariablesIntoStrings1_4 extends App {
   println(f"$name is $age years old, and weights $weight%.2f pounds.")
 
   println(f"$name is $age years old, and weights $weight%.0f pounds.")
+
+
+  println(s"foo\nbar\ttest")
+
+  println(raw"foo\nbar\ttest")
 }
 
 
