@@ -62,6 +62,11 @@ object VariablesIntoStrings1_4 extends App {
 
   giveMeSomeJson(json"""{"name": "$name", "age": $age}""")
 
+  val d = 21251
+
+  println(f"$d%o") //Octal number
+  println(f"$d%x") //Hexadecimal number
+
 }
 
 
