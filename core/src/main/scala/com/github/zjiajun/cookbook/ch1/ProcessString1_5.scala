@@ -23,4 +23,21 @@ object ProcessString1_5 extends App {
     if c != 'l'
   } yield c.toUpper
   println(upper5)
+
+  val lower1 = "HELLO".map(c=>(c.toByte+32).toChar)
+  println(lower1)
+
+  def toLower(c: Char): Char = (c.toByte + 32).toChar
+
+  val lower2 = "HELLO".map(toLower)
+  println(lower2)
+
+  val lower3 = for (c <- "HELLO") yield toLower(c)
+  println(lower3)
+
+  val toLowerFun = (c: Char) => (c.toByte + 32).toChar
+
+  val lower4 = "HELLO".map(toLowerFun)
+  println(lower4)
+
 }
