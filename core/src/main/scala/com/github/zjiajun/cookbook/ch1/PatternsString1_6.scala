@@ -1,5 +1,7 @@
 package com.github.zjiajun.cookbook.ch1
 
+import scala.util.matching.Regex
+
 /**
   * @author zhujiajun
   * @since 2017/9/3
@@ -7,6 +9,8 @@ package com.github.zjiajun.cookbook.ch1
 object PatternsString1_6 extends App {
 
   val pattern = "[0-9]+".r
+
+  val numPattern = new Regex("[0-9]+")
 
   val address = "123 Main Street Suite 101"
 
