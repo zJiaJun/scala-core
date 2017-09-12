@@ -1,5 +1,6 @@
 package com.github.zjiajun.cookbook.ch1
 
+
 /**
   * @author zhujiajun
   * @since 2017/9/11
@@ -14,4 +15,7 @@ object AddOwnMethodString1_10 extends App {
 
   val s = "HAL".increment
   println(s)
+  val s2 = "IBM".decrement
+  println(s2)
+
 }
