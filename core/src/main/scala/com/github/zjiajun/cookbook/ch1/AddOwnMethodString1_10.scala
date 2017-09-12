@@ -8,7 +8,7 @@ object AddOwnMethodString1_10 extends App {
 
   implicit class StringImprovements(s: String)  {
 
-    def increment= s.map(c => (c + 1).toChar)
+    def increment = s.map(c => (c + 1).toChar)
 
   }
 
