@@ -11,11 +11,15 @@ object AddOwnMethodString1_10 extends App {
 
     def increment = s.map(c => (c + 1).toChar)
 
+    def hideAll = s.replaceAll(".", "*")
+
   }
 
   val s = "HAL".increment
   println(s)
   val s2 = "IBM".decrement
   println(s2)
+  val s3 = "HELLO".hideAll
+  println(s3)
 
 }
