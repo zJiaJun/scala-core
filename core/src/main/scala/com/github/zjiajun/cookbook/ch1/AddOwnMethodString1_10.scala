@@ -9,9 +9,9 @@ object AddOwnMethodString1_10 extends App {
 
   implicit class StringImprovements(s: String)  {
 
-    def increment = s.map(c => (c + 1).toChar)
+    def increment: String = s.map(c => (c + 1).toChar)
 
-    def hideAll = s.replaceAll(".", "*")
+    def hideAll: String = s.replaceAll(".", "*")
 
   }
 

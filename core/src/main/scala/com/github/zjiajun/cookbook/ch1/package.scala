@@ -8,7 +8,7 @@ package object ch1 {
 
   implicit class StringDecrement(s: String) {
 
-    def decrement = s.map(c => (c - 1).toChar)
+    def decrement: String = s.map(c => (c - 1).toChar)
 
   }
 
