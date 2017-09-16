@@ -11,4 +11,7 @@ object StringConvertNumber_2_1 extends App {
 
   val b = BigDecimal("3.13459")
   println(b)
+
+  val c = Integer.parseInt("100",2)
+  println(c)
 }
