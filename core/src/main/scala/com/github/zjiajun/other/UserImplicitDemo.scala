@@ -1,5 +1,7 @@
 package com.github.zjiajun.other
 
+import scala.collection.mutable
+
 /**
   * Created by zhujiajun
   * 16/3/31 13:58
@@ -15,19 +17,19 @@ object UserImplicitDemo extends App {
   class UserDao {
     val users = collection.mutable.Map(1 -> User(1,"aa"),2 -> User(2,"bb"), 3 -> User(3,"cc"))
 
-    def findById(userId: Int) = users.get(userId)
+    def findById(userId: Int): Option[User] = users.get(userId)
 
-    def findAll() = users
+    def findAll(): mutable.Map[Int, User] = users
 
-    def updateById(user: User) = users.update(user.userId,user)
+    def updateById(user: User): Unit = users.update(user.userId,user)
   }
 
   implicit val userDao = new UserDao
 
   class UserService(implicit dao: UserDao) {
-    def getAllUsers() = dao.findAll()
+    def getAllUsers(): mutable.Map[Int, User] = dao.findAll()
 
-    def updateUser(user: User) = dao.updateById(user)
+    def updateUser(user: User): Unit = dao.updateById(user)
   }
 
   val userService = new UserService()
