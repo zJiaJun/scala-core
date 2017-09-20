@@ -19,7 +19,7 @@ class VarDef {
   val Array(aa,bb,_,_,cc @ _*) = Array(1,2,3,4,5,6,7)
 
 
-  def show = {
+  def show():Unit = {
     println("-------------------")
     println(s"x = $x, y = $y")
     println(s"x1 = $x1, y1 = $y1")
@@ -35,7 +35,7 @@ object VarDef extends App {
 
   def apply() = new VarDef
 
-  VarDef().show
+  VarDef().show()
 
 }
 
