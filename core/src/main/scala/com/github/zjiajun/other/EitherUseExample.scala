@@ -6,7 +6,7 @@ package com.github.zjiajun.other
   */
 object EitherUseExample extends App {
 
-  def divideBy(x: Int,y: Int): Either[String,Int] = {
+  def divideBy(x: Int, y: Int): Either[String,Int] = {
     if (y == 0) Left("Ops can't divide by 0")
     else Right(x / y)
   }
