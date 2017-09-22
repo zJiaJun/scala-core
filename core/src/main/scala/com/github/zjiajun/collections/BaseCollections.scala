@@ -53,8 +53,8 @@ object BaseCollections extends App {
   }
   println(result)
 
-  private val ints: List[Int] = numbers.map((i: Int) => i * 2)
-  println(ints)
+  private val intList: List[Int] = numbers.map((i: Int) => i * 2)
+  println(intList)
   private val foreach: Unit = numbers.foreach(_ * 2) //没有返回值
   println(foreach)
 
