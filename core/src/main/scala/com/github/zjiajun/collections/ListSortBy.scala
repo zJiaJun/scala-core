@@ -18,9 +18,6 @@ object ListSortBy extends App {
   println("排序后数据: " + sortBy)
 
   for (s <- sortBy) {
-    val _1: Int = s._1
-    val _2: MockObj = s._2
-    println(_1)
-    println(_2)
+    println(s)
   }
 }
