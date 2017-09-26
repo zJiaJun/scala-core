@@ -17,7 +17,6 @@ object ListSortBy extends App {
   val sortBy: ListBuffer[(Int, MockObj)] = list.sortBy(-_._1) // - 倒序 + 正序
   println("排序后数据: " + sortBy)
 
-  for (s <- sortBy) {
-    println(s)
-  }
+  sortBy.foreach(println)
+
 }
