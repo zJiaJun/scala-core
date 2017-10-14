@@ -4,7 +4,7 @@ package com.github.zjiajun.cookbook.ch2
   * @author zhujiajun
   * @since 2017/10/13
   */
-object NumberTypeConvert extends App {
+object NumberTypeConvert_2_2 extends App {
 
   val a = "100"
 
@@ -30,4 +30,6 @@ object NumberTypeConvert extends App {
     case false => println("number cannot convert char")
   }
 
+
+  "www".toInt
 }

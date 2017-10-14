@@ -14,4 +14,12 @@ object StringConvertNumber_2_1 extends App {
 
   val c = Integer.parseInt("100",2)
   println(c)
+
+  def toInt(s: String): Option[Int] = {
+    try {
+      Some(s.toInt)
+    } catch {
+      case e: NumberFormatException => None
+    }
+  }
 }
