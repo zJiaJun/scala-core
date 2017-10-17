@@ -59,6 +59,7 @@ object BaseCollections extends App {
   println(foreach)
 
   private val left: Int = numbers.foldLeft(0)((m: Int, n: Int) => m + n) //10
+  println(left)
 
 
 
