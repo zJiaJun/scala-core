@@ -19,5 +19,4 @@ object EitherUseExample extends App {
     case Right(r) => println(s"Answer is : $r")
   }
 
-
 }
