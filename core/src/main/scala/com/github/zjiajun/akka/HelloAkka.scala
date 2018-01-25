@@ -16,7 +16,7 @@ object HelloAkka extends App {
 
   class Hello extends Actor {
     override def receive: Actor.Receive = {
-      case name : String => println(s"Hello $name")
+      case name : String => println(s"Hello $name $sender()")
     }
   }
 }
