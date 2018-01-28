@@ -1,7 +1,6 @@
 package com.github.zjiajun.other
 
 import scala.concurrent.Future
-import scala.io.StdIn
 import scala.util.{Failure, Success}
 
 /**
