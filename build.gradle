@@ -5,10 +5,10 @@ buildscript {
 
 apply plugin: 'idea'
 ext {
-	scalaVersion = '2.11.11'
+	scalaVersion = '2.11.12'
 	scalaLibVersion = '2.11'
 	akkaGroup = 'com.typesafe.akka'
-	akkaVersion = '2.4.1'
+	akkaVersion = '2.5.9'
 	mysqlVersion = '5.1.36'
 }
 
@@ -37,6 +37,8 @@ subprojects {
 		compile "org.json4s:json4s-native_$scalaLibVersion:3.2.11"
 		compile "com.alibaba:fastjson:1.2.8"
 		testCompile 'junit:junit:4.12'
+		testCompile "org.scalatest:scalatest_$scalaLibVersion:3.0.4"
+		testCompile "$akkaGroup:akka-testkit_$scalaLibVersion:$akkaVersion"
 	}
 
 	tasks.withType(ScalaCompile) {

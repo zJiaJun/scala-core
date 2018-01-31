@@ -1,22 +1,38 @@
 package com.github.zjiajun.akka
 
-import akka.actor.{ActorRef, Props, ActorSystem, Actor}
+import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Props}
+
+
 /**
   * Created by zhujiajun
   * 16/1/29 21:45
   */
-object HelloAkka extends App {
+class HelloAkka extends App {
 
   val system: ActorSystem = ActorSystem("actor-demo")
-  val hello: ActorRef = system.actorOf(Props[Hello],"root")
-  hello ! "zjiajun" //相当于 hello.tell("zjiajun",ActorRef.noSender)
+  val hello: ActorRef = system.actorOf(Props[Hello],"hello")
+  val other = system.actorOf(Props[Other], "other")
+  hello ! "zjiajun"
   Thread sleep 1000
   system terminate()
 
 
-  class Hello extends Actor {
-    override def receive: Actor.Receive = {
-      case name : String => println(s"Hello $name $sender()")
+  class Hello extends Actor with ActorLogging {
+
+    override def receive: Receive = {
+      case name: String => {
+        log.info(s"msg: $name, sender: $sender")
+        other ! 123
+
+      }
+    }
+  }
+
+  class Other extends Actor with ActorLogging {
+
+
+    override def receive: Receive = {
+      case num:Int => log.info(s"msg: $num, sender: $sender")
     }
   }
 }
