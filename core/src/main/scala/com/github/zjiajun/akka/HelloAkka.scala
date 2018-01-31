@@ -1,16 +1,17 @@
 package com.github.zjiajun.akka
 
-import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Props}
+import akka.actor.{Actor, ActorLogging, ActorPath, ActorRef, ActorSystem, Props}
 
 
 /**
   * Created by zhujiajun
   * 16/1/29 21:45
   */
-class HelloAkka extends App {
+object HelloAkka extends App {
 
   val system: ActorSystem = ActorSystem("actor-demo")
-  val hello: ActorRef = system.actorOf(Props[Hello],"hello")
+  val hello: ActorRef = system.actorOf(Hello.props,"hello")
+  println(hello.path)
   val other = system.actorOf(Props[Other], "other")
   hello ! "zjiajun"
   Thread sleep 1000
@@ -26,6 +27,11 @@ class HelloAkka extends App {
 
       }
     }
+  }
+
+  object Hello {
+
+    def props: Props = Props(classOf[Hello])
   }
 
   class Other extends Actor with ActorLogging {
