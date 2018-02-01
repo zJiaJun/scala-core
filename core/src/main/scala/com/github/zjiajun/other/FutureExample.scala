@@ -35,4 +35,15 @@ object FutureExample extends App {
   Thread sleep 3000
   println(s.value)
 
+
+  val listFuture: List[Future[Int]] = List(1,2,3).map(x => Future { x })
+  println(listFuture)
+
+  val futureList: Future[List[Int]] = Future.sequence(listFuture)
+  println(futureList)
+  futureList.onComplete({
+    case Success(s) => println(s)
+  })
+
+
 }
