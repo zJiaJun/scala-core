@@ -55,23 +55,14 @@ subprojects {
 			jvmArgs = ['-Xss2m']
 		}
 	}
-	ScalaCompileOptions.metaClass.daemonServer = true
-	ScalaCompileOptions.metaClass.fork = true
-	ScalaCompileOptions.metaClass.useAnt = true
-	ScalaCompileOptions.metaClass.useCompileDaemon = false
 }
 
 project(':core') {
 	archivesBaseName = "core"
-	jar {
-		baseName = 'scala-core'
-	}
+
 }
 
 project(':dataguru') {
 	archivesBaseName = "dataguru"
-	jar {
-		baseName = 'scala-dataguru'
-	}
 }
 
