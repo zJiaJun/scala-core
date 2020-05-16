@@ -87,6 +87,7 @@ object ArrayDemo extends App {
   println(matrix(0).mkString("-")) //1-0-0
   println(matrix(1).mkString("-")) //4-0-0
 
+  //JavaConversions is deprecated, since 2.12.0, use JavaConverters
   import scala.collection.JavaConversions.bufferAsJavaList //buffer转javaList
   import scala.collection.mutable.ArrayBuffer
   val command = ArrayBuffer("ls","-all","/")

@@ -1,68 +1,37 @@
-buildscript {
-
-
-}
-
-apply plugin: 'idea'
-ext {
-	scalaVersion = '2.11.12'
-	scalaLibVersion = '2.11'
-	akkaGroup = 'com.typesafe.akka'
-	akkaVersion = '2.5.9'
-	mysqlVersion = '5.1.36'
-}
-
-List akka = ["$akkaGroup:akka-actor_$scalaLibVersion:$akkaVersion",
-			 "$akkaGroup:akka-remote_$scalaLibVersion:$akkaVersion",
-			 "$akkaGroup:akka-contrib_$scalaLibVersion:$akkaVersion",
-			 "$akkaGroup:akka-slf4j_$scalaLibVersion:$akkaVersion"]
+group = 'com.github.zjiajun'
+version = 1.0
 
 tasks.named('wrapper') {
 	distributionType = Wrapper.DistributionType.ALL
 }
+tasks.withType(ScalaCompile) {
+	scalaCompileOptions.forkOptions.with {
+		memoryMaximumSize = '1g'
+		jvmArgs = ['-Xss2m','-XX:+HeapDumpOnOutOfMemoryError','-XX:HeapDumpPath=/tmp/heapdump.hprof']
+	}
+}
+
 
 subprojects {
+	apply plugin: 'java'
 	apply plugin: 'scala'
 
 	repositories {
-		mavenCentral()
-	}
-
-	group = 'com.github.zjiajun'
-	version = 1.0
-
-	dependencies {
-		compile "org.scala-lang:scala-library:$scalaVersion"
-		compile akka
-		compile "redis.clients:jedis:2.8.0"
-		compile "mysql:mysql-connector-java:$mysqlVersion"
-		compile "org.json4s:json4s-jackson_$scalaLibVersion:3.2.11"
-		compile "org.json4s:json4s-native_$scalaLibVersion:3.2.11"
-		compile "com.alibaba:fastjson:1.2.8"
-		testCompile 'junit:junit:4.12'
-		testCompile "org.scalatest:scalatest_$scalaLibVersion:3.0.4"
-		testCompile "$akkaGroup:akka-testkit_$scalaLibVersion:$akkaVersion"
-	}
-
-	tasks.withType(ScalaCompile) {
-		scalaCompileOptions.additionalParameters = [
-		        "-encoding","utf-8",
-				"-unchecked"
-		]
-
-		configure(scalaCompileOptions.forkOptions) {
-			memoryMaximumSize = '1g'
-			jvmArgs = ['-Xss2m']
+		mavenLocal()
+		maven {
+			url "http://maven.aliyun.com/nexus/content/groups/public"
 		}
 	}
+
+	dependencies {
+		implementation "org.scala-lang:scala-library:2.12.11"
+		testImplementation "org.scalatest:scalatest_2.12:3.2.0-M4"
+	}
+
 }
 
 project(':core') {
 	archivesBaseName = "core"
-
 }
 
-project(':dataguru') {
-	archivesBaseName = "dataguru"
-}
 

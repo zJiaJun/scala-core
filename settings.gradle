@@ -1,2 +1,2 @@
 rootProject.name = "scala-core"
-include 'core','dataguru'
+include 'core'
