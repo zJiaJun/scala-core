@@ -20,7 +20,7 @@ trait ShortTrait extends Logged {
 object TestMain extends App {
 
   //Short 先执行，然后super.log调用Timestamp
-  val s1 = new Saving with ConsoleLogged with  TimestampTrait with ShortTrait
+  val s1 = new Saving with ConsoleLogged with TimestampTrait with ShortTrait
   //Timestamp 先执行，然后super.log调用short
   val s2 = new Saving with ConsoleLogged with ShortTrait with TimestampTrait
 
