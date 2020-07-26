@@ -11,8 +11,8 @@ object LoanPattern extends App {
 
   val file = new File("loan_pattern.txt")
 
-  def basicWriterFile(file: File, op: FileWriter => Unit) : Unit = {
-    val writer = new FileWriter(file,true) //贷出writer
+  def basicWriterFile(file: File, op: FileWriter => Unit): Unit = {
+    val writer = new FileWriter(file, true) //贷出writer
     try {
       op(writer)
     } finally {
@@ -20,7 +20,7 @@ object LoanPattern extends App {
     }
   }
 
-  def curringWriterFile(file: File)(op: FileWriter => Unit) : Unit = {
+  def curringWriterFile(file: File)(op: FileWriter => Unit): Unit = {
     val writer = new FileWriter(file, true)
     try {
       op(writer)
@@ -29,7 +29,7 @@ object LoanPattern extends App {
     }
   }
 
-  def tryWithResource[T <: Closeable, R](resource: T)(op: T => R) : R = {
+  def tryWithResource[T <: Closeable, R](resource: T)(op: T => R): R = {
     try {
       op(resource)
     } finally {
