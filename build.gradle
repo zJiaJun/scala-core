@@ -25,6 +25,13 @@ subprojects {
 
 	dependencies {
 		implementation "org.scala-lang:scala-library:2.12.11"
+		implementation "org.slf4j:slf4j-api:1.7.25"
+		implementation "org.apache.logging.log4j:log4j-api:2.13.3"
+		implementation "org.apache.logging.log4j:log4j-core:2.13.3"
+		implementation "org.apache.logging.log4j:log4j-slf4j-impl:2.13.3"
+		implementation ("org.apache.logging.log4j:log4j-api-scala_2.12:11.0") {
+			exclude group: "org.scala-lang"
+		}
 		testImplementation "org.scalatest:scalatest_2.12:3.2.0-M4"
 	}
 
