@@ -4,7 +4,7 @@ package com.github.zjiajun.impatient.charpter14
  * Created by zhujiajun
  * 15/7/15 16:32
  */
-object MathTest extends App {
+object BasicMath extends App {
 
   var sign = 0
   val ch :Char = '9'
