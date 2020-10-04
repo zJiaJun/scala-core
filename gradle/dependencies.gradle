@@ -1,0 +1,27 @@
+ext {
+    versions = [:]
+    libs = [:]
+}
+
+def defaultScala212Version = '2.12.11'
+versions["scala"] = defaultScala212Version
+
+versions["baseScala"] = versions.scala.substring(0, versions.scala.lastIndexOf("."))
+
+versions += [
+        scala: "2.12.11",
+        slf4j: "1.7.30",
+        scalaLogging: "3.9.2",
+        scalatest: "3.0.8",
+        log4j2: "2.13.3"
+]
+
+libs += [
+        scalaLibrary: "org.scala-lang:scala-library:$versions.scala",
+        scalaReflect: "org.scala-lang:scala-reflect:$versions.scala",
+        scalaLogging: "com.typesafe.scala-logging:scala-logging_$versions.baseScala:$versions.scalaLogging",
+        slf4jApi: "org.slf4j:slf4j-api:$versions.slf4j",
+        log4j2: "org.apache.logging.log4j:log4j-core:$versions.log4j2",
+        slf4jlog4j2: "org.apache.logging.log4j:log4j-slf4j-impl:$versions.log4j2",
+        scalatest: "org.scalatest:scalatest_$versions.baseScala:$versions.scalatest"
+]

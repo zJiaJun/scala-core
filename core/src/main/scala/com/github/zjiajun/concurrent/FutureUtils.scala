@@ -1,6 +1,6 @@
 package com.github.zjiajun.concurrent
 
-import org.apache.logging.log4j.scala.Logging
+import com.typesafe.scalalogging.LazyLogging
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -11,7 +11,7 @@ import scala.concurrent.duration._
  * @version 1.0
  * @since 2020/10/2 22:43
  */
-object FutureUtils extends Logging {
+object FutureUtils extends LazyLogging {
 
   private val durationLimit = 100.millisecond.toMillis
 

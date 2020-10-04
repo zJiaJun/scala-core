@@ -1,18 +1,18 @@
 package com.github.zjiajun.concurrent
 
-import org.apache.logging.log4j.scala.Logging
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 import com.github.zjiajun.concurrent.FutureUtils._
+import com.typesafe.scalalogging.LazyLogging
 
 /**
  * @author zhujiajun
  * @version 1.0
  * @since 2020/10/2 22:48
  */
-object FutureExample extends App with Logging {
+object FutureExample extends App with LazyLogging {
 
 
   Future {
