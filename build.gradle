@@ -50,11 +50,17 @@ subprojects {
 		implementation libs.slf4jlog4j2
 		testImplementation libs.scalatest
 	}
-
 }
 
 project(':core') {
 	archivesBaseName = "core"
+}
+project(':scalikejdbc') {
+
+	dependencies {
+		implementation libs.mysql
+		implementation libs.scalikejdbc
+	}
 }
 
 
