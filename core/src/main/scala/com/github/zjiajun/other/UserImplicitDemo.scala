@@ -12,16 +12,16 @@ import scala.collection.mutable
   */
 object UserImplicitDemo extends App {
 
-  case class User(userId: Int,userName: String)
+  case class User(userId: Int, userName: String)
 
   class UserDao {
-    val users = collection.mutable.Map(1 -> User(1,"aa"),2 -> User(2,"bb"), 3 -> User(3,"cc"))
+    val users = collection.mutable.Map(1 -> User(1, "aa"), 2 -> User(2, "bb"), 3 -> User(3, "cc"))
 
     def findById(userId: Int): Option[User] = users.get(userId)
 
     def findAll(): mutable.Map[Int, User] = users
 
-    def updateById(user: User): Unit = users.update(user.userId,user)
+    def updateById(user: User): Unit = users.update(user.userId, user)
   }
 
   implicit val userDao = new UserDao
@@ -36,11 +36,10 @@ object UserImplicitDemo extends App {
 
   println(userService.getAllUsers())
 
-  userService.updateUser(User(1,"aaa"))
+  userService.updateUser(User(1, "aaa"))
   println(userService.getAllUsers())
 
   val userService2 = new UserService()
   println(userService2.getAllUsers())
-
 
 }

@@ -1,13 +1,12 @@
 package com.github.zjiajun.cookbook.ch1
 
-
 /**
   * @author zhujiajun
   * @since 2017/9/11
   */
 object AddOwnMethodString1_10 extends App {
 
-  implicit class StringImprovements(s: String)  {
+  implicit class StringImprovements(s: String) {
 
     def increment: String = s.map(c => (c + 1).toChar)
 
@@ -17,7 +16,7 @@ object AddOwnMethodString1_10 extends App {
 
     def asBoolean: Boolean = s match {
       case "0" | "zero" | "" | " " => false
-      case _ => true
+      case _                       => true
     }
   }
 

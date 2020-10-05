@@ -14,8 +14,6 @@ class Employee(name: String, age: Int, salary: Double) extends Person(name, age)
 
 object Test extends App {
 
-  val employee = new Employee("e1",30,1234.56)
+  val employee = new Employee("e1", 30, 1234.56)
   println(employee)
 }
-
-

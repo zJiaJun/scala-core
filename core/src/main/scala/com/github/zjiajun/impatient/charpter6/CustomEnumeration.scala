@@ -1,15 +1,15 @@
 package com.github.zjiajun.impatient.charpter6
 
 /**
- * Created by zhujiajun
- * 15/6/15 14:50
- */
+  * Created by zhujiajun
+  * 15/6/15 14:50
+  */
 object CustomEnumeration extends Enumeration with App {
 
   type CustomEnumeration = CustomEnumeration.Value
   val Red = Value
   val Yellow = Value("yellow")
-  val Green = Value(2,"green")
+  val Green = Value(2, "green")
 
   println(CustomEnumeration.Red.id + ":" + CustomEnumeration.Red.toString)
   println(CustomEnumeration.Yellow.id + ":" + CustomEnumeration.Yellow.toString)

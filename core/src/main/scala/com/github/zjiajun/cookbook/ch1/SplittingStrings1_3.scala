@@ -14,10 +14,8 @@ object SplittingStrings1_3 extends App {
 
   res.map(_.trim).foreach(print)
 
-
   val ss = "hello world, this is Al".split("\\s+")
   //res0: Array[java.lang.String] = Array(hello, world,, this, is, Al)
-
 
   "hello world".split(" ")
   //res0: Array[java.lang.String] = Array(hello, world)

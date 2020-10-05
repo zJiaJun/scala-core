@@ -12,17 +12,15 @@ trait Logged {
 
 trait ConsoleLogged extends Logged {
 
-  override def log(msg: String): Unit = {
+  override def log(msg: String): Unit =
     println(msg)
-  }
 
 }
 
 class Saving extends Logged {
 
-  def save(i: Int) = {
+  def save(i: Int) =
     log("msg:" + i)
-  }
 
 }
 
@@ -31,4 +29,3 @@ object TraitMain extends App {
   val sa = new Saving with ConsoleLogged
   sa.save(123)
 }
-

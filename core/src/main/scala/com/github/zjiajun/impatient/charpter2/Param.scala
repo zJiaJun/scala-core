@@ -8,27 +8,26 @@ import java.text.MessageFormat
   */
 object Param extends App {
 
-    def decorate(str: String,left: String = "[",right: String = "]") = println(left + str + right)
+  def decorate(str: String, left: String = "[", right: String = "]") = println(left + str + right)
 
-    decorate("Hello")
-    decorate("Hello","<<<",">>>")
-    decorate("Hello","<<<[")
-    decorate(left = "<<",str = "Hello",right = ">>")
-    decorate("Hello",right = "]>>>")
+  decorate("Hello")
+  decorate("Hello", "<<<", ">>>")
+  decorate("Hello", "<<<[")
+  decorate(left = "<<", str = "Hello", right = ">>")
+  decorate("Hello", right = "]>>>")
 
-    def sum(args: Int*) = {
-      var result = 0
-      for (arg <- args) result += arg
-      result
-    }
+  def sum(args: Int*) = {
+    var result = 0
+    for (arg <- args) result += arg
+    result
+  }
 
-    println(sum(1))
-    println(sum(1,2,3))
-    println(sum(1 to 3:_*))
+  println(sum(1))
+  println(sum(1, 2, 3))
+  println(sum(1 to 3: _*))
 
-    val str = MessageFormat.format("The answer to {0} is {1}","everything",42.asInstanceOf[AnyRef])
-    println(str)
-
+  val str = MessageFormat.format("The answer to {0} is {1}", "everything", 42.asInstanceOf[AnyRef])
+  println(str)
 
   def box(s: String) {
     val border = "-" * s.length + "--\n"

@@ -6,6 +6,4 @@ package com.github.zjiajun
   *
   * Scala for the impatient
   */
-package object impatient {
-
-}
+package object impatient {}

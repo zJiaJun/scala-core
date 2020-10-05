@@ -8,6 +8,4 @@ package com.github.zjiajun
   *
   * Alvin Alexander
   */
-package object cookbook {
-
-}
+package object cookbook {}

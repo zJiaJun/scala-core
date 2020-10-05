@@ -22,7 +22,4 @@ object PatternsString1_6 extends App {
   match2.foreach(println)
   println(match3)
 
-
-
-
 }

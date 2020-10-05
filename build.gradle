@@ -11,7 +11,20 @@ buildscript {
 	}
 	apply from: "$rootDir/gradle/dependencies.gradle"
 
+	dependencies {
+		classpath "com.diffplug.spotless:spotless-plugin-gradle:$versions.spotlessPlugin"
+	}
 }
+
+apply plugin: "com.diffplug.gradle.spotless"
+spotless {
+	scala {
+		target '**/*.scala'
+		scalafmt("$versions.scalafmt").configFile('checkstyle/.scalafmt.conf')
+	}
+}
+
+
 tasks.named('wrapper') {
 	distributionType = Wrapper.DistributionType.ALL
 }
@@ -55,7 +68,7 @@ subprojects {
 project(':core') {
 	archivesBaseName = "core"
 }
-project(':scalikejdbc') {
+project(':scalike') {
 
 	dependencies {
 		implementation libs.mysql

@@ -22,7 +22,6 @@ object OverridingDefaultNumberType_2_3 extends App {
   val d2 = 1: Float
   println(s"value is $d2, type is ${d2.getClass}")
 
-
   val a3: Byte = 123
   println(s"value is $a3, type is ${a3.getClass}")
   val b3 = 0x3703

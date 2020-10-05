@@ -3,13 +3,13 @@ package com.github.zjiajun.other
 import java.time.LocalDateTime
 
 /**
- * @author zhujiajun
- * @version 1.0
- * @since 2020/5/17 15:32
- *
- * 字符串插值 s f raw.
- * 自定义date插值
- */
+  * @author zhujiajun
+  * @version 1.0
+  * @since 2020/5/17 15:32
+  *
+  * 字符串插值 s f raw.
+  * 自定义date插值
+  */
 object InterpolationExample extends App {
 
   val height = 1.9d
@@ -31,7 +31,7 @@ object InterpolationExample extends App {
     }
   }
 
-  val (year, month, dayOfMonth, hour, minute, second)  = (2020, 5, 17, 16, 10, 20)
+  val (year, month, dayOfMonth, hour, minute, second) = (2020, 5, 17, 16, 10, 20)
   val dateTime: LocalDateTime = date"${year}-$month-$dayOfMonth-$hour-$minute-$second"
   println(dateTime)
 

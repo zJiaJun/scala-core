@@ -6,21 +6,19 @@ package com.github.zjiajun.other
   */
 object FunExample extends App {
 
-  def newThread(fun: ()=> Unit): Thread = {
+  def newThread(fun: () => Unit): Thread =
     new Thread {
       override def run() = fun()
     }
-  }
 
-  def startNewThread(fun: => Unit): Unit = {
+  def startNewThread(fun: => Unit): Unit =
     try {
       println("begin new thread")
-      newThread(()=>fun).start()
+      newThread(() => fun).start()
       println("finished thread work")
     } catch {
       case e: Throwable => e.printStackTrace()
     }
-  }
 
   def doWorkInThread() = {
     println("doWork")
@@ -29,9 +27,5 @@ object FunExample extends App {
   }
 
   startNewThread(doWorkInThread())
-
-
-
-
 
 }

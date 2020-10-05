@@ -1,19 +1,21 @@
-package com.github.zjiajun.scalikejdbc
+package com.github.zjiajun.scalike
 
 import com.typesafe.scalalogging.LazyLogging
 import scalikejdbc._
 
 /**
- * @author zhujiajun
- * @version 1.0
- * @since 2020/10/4 23:56
- */
+  * @author zhujiajun
+  * @version 1.0
+  * @since 2020/10/4 23:56
+  */
 object IndexExample extends App with LazyLogging {
 
   Class.forName("com.mysql.jdbc.Driver")
   ConnectionPool.singleton(
     "jdbc:mysql://localhost/sandbox?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&autoReconnectForPools=true",
-    "root", "root")
+    "root",
+    "root"
+  )
 
   implicit val session = AutoSession
 
@@ -40,8 +42,7 @@ object IndexExample extends App with LazyLogging {
   case class Member(id: Long, name: Option[String], createdAt: ZonedDateTime)
   object Member extends SQLSyntaxSupport[Member] {
     override val tableName = "members"
-    def apply(rs: WrappedResultSet) = new Member(
-      rs.long("id"), rs.stringOpt("name"), rs.zonedDateTime("created_at"))
+    def apply(rs: WrappedResultSet) = new Member(rs.long("id"), rs.stringOpt("name"), rs.zonedDateTime("created_at"))
   }
 
   // find all members

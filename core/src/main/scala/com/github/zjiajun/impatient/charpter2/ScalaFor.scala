@@ -12,7 +12,7 @@ object ScalaFor extends App {
   val s2 = for (c <- "Hello"; i <- 0 to 1) yield (c + i).toChar
   println(s2)
 
-  val s3 = for (i <- 0 to 1;c <- "Hello") yield (c + i).toChar
+  val s3 = for (i <- 0 to 1; c <- "Hello") yield (c + i).toChar
   println(s3)
 
 }

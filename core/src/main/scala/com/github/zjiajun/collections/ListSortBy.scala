@@ -8,10 +8,10 @@ import scala.collection.mutable.ListBuffer
   */
 object ListSortBy extends App {
 
-  case class MockObj(id: Int,name: String)
+  case class MockObj(id: Int, name: String)
 
-  val list = ListBuffer[(Int,MockObj)]()
-  for (i <- 0 to 5) list += (i -> MockObj(i,i + "_name"))
+  val list = ListBuffer[(Int, MockObj)]()
+  for (i <- 0 to 5) list += (i -> MockObj(i, i + "_name"))
   println("原始数据: " + list)
 
   val sortBy: ListBuffer[(Int, MockObj)] = list.sortBy(-_._1) // - 倒序 + 正序

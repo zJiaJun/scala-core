@@ -8,7 +8,7 @@ package com.github.zjiajun.collections
   */
 object TupleIterator extends App {
 
-  val tupleValue = (1,2,3,4,5,6)
+  val tupleValue = (1, 2, 3, 4, 5, 6)
 
   def tupleIterator(tuple: Product): Unit = tuple.productIterator.foreach(println)
 

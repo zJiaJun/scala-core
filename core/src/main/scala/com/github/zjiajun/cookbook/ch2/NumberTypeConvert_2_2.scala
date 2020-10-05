@@ -16,20 +16,19 @@ object NumberTypeConvert_2_2 extends App {
   val b = 1000L
 
   b.isValidByte match {
-    case true => println(b.toByte)
+    case true  => println(b.toByte)
     case false => println("number cannot convert byte")
-}
+  }
 
   b.isValidShort match {
-    case true => println(b.toShort)
+    case true  => println(b.toShort)
     case false => println("number cannot convert short")
   }
 
   b.isValidChar match {
-    case true => println(b.toChar)
+    case true  => println(b.toChar)
     case false => println("number cannot convert char")
   }
-
 
   "www".toInt
 }

@@ -12,10 +12,10 @@ object ProcessString1_5 extends App {
   val upper2 = "hello,world".map(_.toUpper)
   println(upper2)
 
-  val upper3 = "hello,world".filter(_!='l').map(_.toUpper)
+  val upper3 = "hello,world".filter(_ != 'l').map(_.toUpper)
   println(upper3)
 
-  val upper4 = for(c <- "hello,world") yield c.toUpper
+  val upper4 = for (c <- "hello,world") yield c.toUpper
   println(upper4)
 
   val upper5 = for {
@@ -24,7 +24,7 @@ object ProcessString1_5 extends App {
   } yield c.toUpper
   println(upper5)
 
-  val lower1 = "HELLO".map(c=>(c.toByte+32).toChar)
+  val lower1 = "HELLO".map(c => (c.toByte + 32).toChar)
   println(lower1)
 
   def toLower(c: Char): Char = (c.toByte + 32).toChar

@@ -16,6 +16,8 @@ versions += [
         log4j2: "2.13.3",
         mysql:"5.1.49",
         scalikejdbc: "3.5.0",
+        scalafmt:"1.5.1",
+        spotlessPlugin: "3.28.1"
 ]
 
 libs += [
