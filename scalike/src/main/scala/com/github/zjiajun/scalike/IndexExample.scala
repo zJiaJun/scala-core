@@ -11,6 +11,7 @@ import scalikejdbc._
 object IndexExample extends App with LazyLogging {
 
   Class.forName("com.mysql.jdbc.Driver")
+  GlobalSettings.loggingSQLAndTime = LoggingSQLAndTimeSettings(enabled = true, singleLineMode = false)
   ConnectionPool.singleton(
     "jdbc:mysql://localhost/sandbox?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&autoReconnectForPools=true",
     "root",
@@ -28,7 +29,7 @@ object IndexExample extends App with LazyLogging {
         )
   """.execute.apply()
 
-  // insert initial data
+//   insert initial data
 //  Seq("Alice", "Bob", "Chris") foreach { name =>
 //    sql"insert into members (name, created_at) values (${name}, current_timestamp)".update.apply()
 //  }
@@ -42,7 +43,10 @@ object IndexExample extends App with LazyLogging {
   case class Member(id: Long, name: Option[String], createdAt: ZonedDateTime)
   object Member extends SQLSyntaxSupport[Member] {
     override val tableName = "members"
-    def apply(rs: WrappedResultSet) = new Member(rs.long("id"), rs.stringOpt("name"), rs.zonedDateTime("created_at"))
+    def apply(rs: WrappedResultSet) =
+      new Member(rs.long("id"), rs.stringOpt("name"), rs.zonedDateTime("created_at"))
+    def apply(r: ResultName[Member])(rs: WrappedResultSet) =
+      new Member(rs.long(r.id), rs.stringOpt(r.name), rs.zonedDateTime(r.createdAt))
   }
 
   // find all members
@@ -53,8 +57,8 @@ object IndexExample extends App with LazyLogging {
   val m = Member.syntax("m")
   val name = "Alice"
   val alice: Option[Member] = withSQL {
-    select.from(Member as m).where.eq(m.name, name)
-  }.map(rs => Member(rs)).single.apply()
+    select.all.from(Member as m).where.eq(m.name, name)
+  }.map(rs => Member(m.resultName)(rs)).single.apply()
   logger.info("300 " + alice)
 
 }
