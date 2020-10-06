@@ -11,12 +11,12 @@ import scalikejdbc._
 object IndexExample extends App with LazyLogging {
 
   Class.forName("com.mysql.jdbc.Driver")
-  GlobalSettings.loggingSQLAndTime = LoggingSQLAndTimeSettings(enabled = true, singleLineMode = false)
-  ConnectionPool.singleton(
-    "jdbc:mysql://localhost/sandbox?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&autoReconnectForPools=true",
-    "root",
-    "root"
-  )
+  GlobalSettings.loggingSQLAndTime = LoggingSQLAndTimeSettings(enabled = true, singleLineMode = true, logLevel = 'INFO)
+  val (url, user, password) =
+    ("jdbc:mysql://localhost/sandbox?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&autoReconnectForPools=true",
+     "root",
+     "root")
+  ConnectionPool.singleton(url, user, password)
 
   implicit val session = AutoSession
 
@@ -35,8 +35,8 @@ object IndexExample extends App with LazyLogging {
 //  }
 
   // for now, retrieves all data as Map value
-  val entities: List[Map[String, Any]] = sql"select * from members".map(_.toMap).list.apply()
-  logger.info("100 " + entities)
+  val allValueInMap: List[Map[String, Any]] = sql"select * from members".map(_.toMap).list.apply()
+  logger.info(s"allValueInMap $allValueInMap")
 
   // defines entity object and extractor
   import java.time._
@@ -51,14 +51,22 @@ object IndexExample extends App with LazyLogging {
 
   // find all members
   val members: List[Member] = sql"select * from members".map(rs => Member(rs)).list.apply()
-  logger.info("200 " + members)
+  logger.info(s"list members $members")
 
   // use paste mode (:paste) on the Scala REPL
   val m = Member.syntax("m")
   val name = "Alice"
   val alice: Option[Member] = withSQL {
-    select.all.from(Member as m).where.eq(m.name, name)
+    select.from(Member as m).where.eq(m.name, name)
   }.map(rs => Member(m.resultName)(rs)).single.apply()
-  logger.info("300 " + alice)
+  logger.info(s"query dsl result $alice")
+
+  val memberId: Option[Long] = DB readOnly { implicit session =>
+    sql"select id from members where name = ${name}" // don't worry, prevents SQL injection
+      .map(rs => rs.long("id")) // extracts values from rich java.sql.ResultSet
+      .single // single, list, traversable
+      .apply()
+  }
+  logger.info(s"memberId $memberId")
 
 }
