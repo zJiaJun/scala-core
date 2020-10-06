@@ -73,6 +73,7 @@ project(':scalike') {
 	dependencies {
 		implementation libs.mysql
 		implementation libs.scalikejdbc
+		implementation libs.scalikejdbcConfig
 	}
 }
 
