@@ -1,13 +1,13 @@
 package com.github.zjiajun.impatient.charpter14
 
-import org.apache.logging.log4j.scala.Logging
+import com.typesafe.scalalogging.LazyLogging
 
 /**
   * @author zhujiajun
   * @version 1.0
   * @since 2020/8/19 16:11
   */
-object ListMath extends App with Logging {
+object ListMath extends App with LazyLogging {
 
   val list = List(1000, 2000, 3000)
 

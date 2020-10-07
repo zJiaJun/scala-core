@@ -1,13 +1,13 @@
 package com.github.zjiajun.impatient.charpter14
 
-import org.apache.logging.log4j.scala.Logging
+import com.typesafe.scalalogging.LazyLogging
 
 /**
   * @author zhujiajun
   * @version 1.0
   * @since 2020/8/17 22:54
   */
-object ArrayMatch extends App with Logging {
+object ArrayMatch extends App with LazyLogging {
 
   val array = Array(0, 10, 11, 12)
 
@@ -17,7 +17,7 @@ object ArrayMatch extends App with Logging {
       case Array(x, y) => logger.info(s"$x, $y")
       case Array(0, rest @ _*) => {
         logger.info("0 ...")
-        logger.info(rest.seq)
+        logger.info(rest.seq.toString())
       }
     }
 
