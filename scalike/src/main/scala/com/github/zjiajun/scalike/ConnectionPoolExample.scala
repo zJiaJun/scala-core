@@ -9,6 +9,8 @@ import scalikejdbc._
   * @author zhujiajun
   * @version 1.0
   * @since 2020/10/6 15:21
+  *
+  * @see [[http://scalikejdbc.org/documentation/connection-pool.html]]
   */
 object ConnectionPoolExample extends App with LazyLogging {
 
@@ -58,11 +60,37 @@ object ConnectionPoolExample extends App with LazyLogging {
       }
     }
 
+  //DB.xxx的方法, 源码就是useLoadPattern的抽象
   def useScalikeDb(): Unit = {
     val list = DB.readOnly { implicit session =>
       sql"select * from members".map(_.toMap()).list().apply()
     }
     logger.info(s"useScalikeDb, $list")
+  }
+
+  /*
+    切换连接池方式,默认使用的是commons-dbcp2, 连接池工厂Commons2ConnectionPoolFactory
+    第一种
+    1.实现ConnectionPoolFactory 特质， 实现ConnectionPool 抽象类
+    2.注册poolFactory, 名称是 "yourConnectionPoolName"
+    3.连接池settings设置connectionPoolFactoryName属性, 即上部注册的名称
+
+    第二种
+    1.实现ConnectionPoolFactory 特质， 实现ConnectionPool 抽象类(和第一部一样)
+    2.声明隐式ConnectionPoolFactory
+    3.初始化时,会自动传入到singleton或add方法中
+
+   */
+  def switchConnectionPool(): Unit = {
+    ConnectionPoolFactoryRepository.add("yourConnectionPoolName", Commons2ConnectionPoolFactory)
+    ConnectionPool.singleton(url,
+                             user,
+                             password,
+                             ConnectionPoolSettings(connectionPoolFactoryName = "yourConnectionPoolName"))
+
+    //or
+    implicit val connectionPoolFactory: ConnectionPoolFactory = Commons2ConnectionPoolFactory
+    ConnectionPool.singleton(url, user, password)(connectionPoolFactory)
   }
 
   originQuery()
