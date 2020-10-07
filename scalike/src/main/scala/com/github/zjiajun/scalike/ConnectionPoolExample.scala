@@ -3,6 +3,7 @@ package com.github.zjiajun.scalike
 import java.sql.{Connection, PreparedStatement, ResultSet}
 
 import com.typesafe.scalalogging.LazyLogging
+import com.zaxxer.hikari.{HikariConfig, HikariDataSource}
 import scalikejdbc._
 
 /**
@@ -19,21 +20,30 @@ object ConnectionPoolExample extends App with LazyLogging {
      "root",
      "root")
 
-  val settings = ConnectionPoolSettings(initialSize = 5,
-                                        maxSize = 10,
-                                        connectionTimeoutMillis = 3000L,
-                                        validationQuery = "select 1 from dual")
-  //default use Commons2ConnectionPoolFactory -> Commons2ConnectionPool, depend on common-dbcp2
-  ConnectionPool.singleton(url, user, password, settings)
-  ConnectionPool.add("example", url, user, password, settings)
+  initConnectionPool()
+  usingOriginQuery()
+  usingLoadPattern()
+  usingScalikeDb()
+  usingHikariConnectionPool()
+
+  def initConnectionPool(): Unit = {
+    val settings = ConnectionPoolSettings(initialSize = 5,
+                                          maxSize = 10,
+                                          connectionTimeoutMillis = 3000L,
+                                          validationQuery = "select 1 from dual")
+    //default use Commons2ConnectionPoolFactory -> Commons2ConnectionPool, depend on common-dbcp2
+    ConnectionPool.singleton(url, user, password, settings)
+    //other connection pool
+//    ConnectionPool.add("example", url, user, password, settings)
+  }
 
   //从连接池中获取一个连接,使用底层原生查询,无封装
-  def originQuery(): Unit = {
+  def usingOriginQuery(): Unit = {
     val conn: Connection = ConnectionPool.borrow()
     val sql = "select * from members"
     val preparedStatement: PreparedStatement = conn.prepareStatement(sql)
     val resultSet = preparedStatement.executeQuery()
-    wrapperDataAndPrint("originQuery", resultSet)
+    wrapperDataAndPrint("usingOriginQuery", resultSet)
     resultSet.close()
     preparedStatement.close()
     conn.close()
@@ -47,7 +57,7 @@ object ConnectionPoolExample extends App with LazyLogging {
     }
 
   //借贷模式,主要对资源贷出,省去每次关闭的操作,see trait LoanPattern
-  def useLoadPattern(): Unit =
+  def usingLoadPattern(): Unit =
     //会调用conn.close
     using(ConnectionPool.borrow()) { conn: Connection =>
       //会调用preparedStatement.close
@@ -55,20 +65,21 @@ object ConnectionPoolExample extends App with LazyLogging {
         preparedStatement.setLong(1, 1L)
         // 会调用resultSet.close
         using(preparedStatement.executeQuery()) { resultSet: ResultSet =>
-          wrapperDataAndPrint("useLoadPattern", resultSet)
+          wrapperDataAndPrint("usingLoadPattern", resultSet)
         }
       }
     }
 
   //DB.xxx的方法, 源码就是useLoadPattern的抽象
-  def useScalikeDb(): Unit = {
+  def usingScalikeDb(): Unit = {
     val list = DB.readOnly { implicit session =>
       sql"select * from members".map(_.toMap()).list().apply()
     }
-    logger.info(s"useScalikeDb, $list")
+    logger.info(s"usingScalikeDb, $list")
   }
 
   /*
+
     切换连接池方式,默认使用的是commons-dbcp2, 连接池工厂Commons2ConnectionPoolFactory
     第一种
     1.实现ConnectionPoolFactory 特质， 实现ConnectionPool 抽象类
@@ -89,12 +100,32 @@ object ConnectionPoolExample extends App with LazyLogging {
                              ConnectionPoolSettings(connectionPoolFactoryName = "yourConnectionPoolName"))
 
     //or
+
+    /*
     implicit val connectionPoolFactory: ConnectionPoolFactory = Commons2ConnectionPoolFactory
-    ConnectionPool.singleton(url, user, password)(connectionPoolFactory)
+    打开会报编译错误
+    forward reference extends over definition of value connectionPoolFactory one error found
+    大概意思就是, 定义在后, 使用在前, 将注释的语句移到第一个singleton之前就ok.
+    这里关注两种方式切换连接池实现,实际不会编写这样代码
+     */
+    ConnectionPool.singleton(url, user, password)(Commons2ConnectionPoolFactory)
   }
 
-  originQuery()
-  useLoadPattern()
-  useScalikeDb()
+  def usingHikariConnectionPool(): Unit = {
+    val hikariConfig = new HikariConfig()
+    hikariConfig.setJdbcUrl(url)
+    hikariConfig.setUsername(user)
+    hikariConfig.setPassword(password)
+    hikariConfig.setMaximumPoolSize(10)
+    hikariConfig.setConnectionTimeout(3000L)
+    hikariConfig.setPoolName("scalikejdbc-hikari-pool")
+    val hikariDataSource = new HikariDataSource(hikariConfig)
+    ConnectionPool.add("hikari", new DataSourceConnectionPool(hikariDataSource))
+
+    val list = NamedDB("hikari").readOnly { implicit session =>
+      sql"select * from members".map(_.toMap()).list().apply()
+    }
+    logger.info(s"usingHikariConnectionPool, $list")
+  }
 
 }

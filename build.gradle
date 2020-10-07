@@ -74,6 +74,7 @@ project(':scalike') {
 		implementation libs.mysql
 		implementation libs.scalikejdbc
 		implementation libs.scalikejdbcConfig
+		implementation libs.hikariCP
 	}
 }
 

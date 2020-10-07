@@ -16,6 +16,7 @@ versions += [
         mysql:"5.1.49",
         scalikejdbc: "3.5.0",
         scalikejdbcConfig: "3.5.0",
+        hikariCP: "3.4.5",
         scalafmt:"1.5.1",
         spotlessPlugin: "3.28.1"
 ]
@@ -30,5 +31,6 @@ libs += [
         mysql: "mysql:mysql-connector-java:$versions.mysql",
         scalikejdbc: "org.scalikejdbc:scalikejdbc_$versions.baseScala:$versions.scalikejdbc",
         scalikejdbcConfig: "org.scalikejdbc:scalikejdbc-config_$versions.baseScala:$versions.scalikejdbcConfig",
+        hikariCP: "com.zaxxer:HikariCP:$versions.hikariCP",
         scalatest: "org.scalatest:scalatest_$versions.baseScala:$versions.scalatest"
 ]
