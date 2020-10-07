@@ -44,18 +44,17 @@ object ConnectionPoolExample extends App with LazyLogging {
       logger.info(s"$tag: $id, $name, $createAt")
     }
 
-  //借贷模式,主要对资源贷出,省去每次都关闭的操作
+  //借贷模式,主要对资源贷出,省去每次关闭的操作,see trait LoanPattern
   def useLoadPattern(): Unit =
     //会调用conn.close
-    using(ConnectionPool.borrow()) { conn: java.sql.Connection =>
+    using(ConnectionPool.borrow()) { conn: Connection =>
       //会调用preparedStatement.close
-      using(conn.prepareStatement("select * from members where id = ?")) {
-        preparedStatement: java.sql.PreparedStatement =>
-          preparedStatement.setLong(1, 1L)
-          // 会调用resultSet.close
-          using(preparedStatement.executeQuery()) { resultSet: java.sql.ResultSet =>
-            wrapperDataAndPrint("useLoadPattern", resultSet)
-          }
+      using(conn.prepareStatement("select * from members where id = ?")) { preparedStatement: PreparedStatement =>
+        preparedStatement.setLong(1, 1L)
+        // 会调用resultSet.close
+        using(preparedStatement.executeQuery()) { resultSet: ResultSet =>
+          wrapperDataAndPrint("useLoadPattern", resultSet)
+        }
       }
     }
 
