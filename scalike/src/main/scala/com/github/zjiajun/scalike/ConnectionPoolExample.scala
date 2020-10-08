@@ -15,11 +15,6 @@ import scalikejdbc._
   */
 object ConnectionPoolExample extends App with LazyLogging {
 
-  val (url, user, password) =
-    ("jdbc:mysql://localhost/sandbox?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&autoReconnectForPools=true",
-     "root",
-     "root")
-
   initConnectionPool()
   usingOriginQuery()
   usingLoadPattern()
@@ -51,9 +46,9 @@ object ConnectionPoolExample extends App with LazyLogging {
 
   private[this] def wrapperDataAndPrint(tag: String, resultSet: ResultSet): Unit =
     while (resultSet.next()) {
-      val (id, name, createAt) =
+      val (id, name, createdAt) =
         (resultSet.getLong("id"), resultSet.getString("name"), resultSet.getDate("created_at"))
-      logger.info(s"$tag: $id, $name, $createAt")
+      logger.info(s"$tag: $id, $name, $createdAt")
     }
 
   //借贷模式,主要对资源贷出,省去每次关闭的操作,see trait LoanPattern

@@ -10,6 +10,8 @@ import scalikejdbc.config.{DBs, DBsWithEnv}
   *@since 2020/10/7 12:53
   *
   * use scalikejdbc-config, load application.conf
+  *
+  * @see [[http://scalikejdbc.org/documentation/configuration.html]]
   */
 object ConfigExample extends App with LazyLogging {
 

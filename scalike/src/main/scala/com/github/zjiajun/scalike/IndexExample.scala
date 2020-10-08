@@ -12,10 +12,6 @@ object IndexExample extends App with LazyLogging {
 
   Class.forName("com.mysql.jdbc.Driver")
   GlobalSettings.loggingSQLAndTime = LoggingSQLAndTimeSettings(enabled = true, singleLineMode = true, logLevel = 'INFO)
-  val (url, user, password) =
-    ("jdbc:mysql://localhost/sandbox?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&autoReconnectForPools=true",
-     "root",
-     "root")
   ConnectionPool.singleton(url, user, password)
 
   implicit val session = AutoSession
