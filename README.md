@@ -17,5 +17,9 @@
   * 一些学习和研究scala过程中的例子
   
 ## scalike
-  * scala操作关系数据库的框架[scalikejdbc](http://scalikejdbc.org/)
-  * 官网例子
+  * A tidy SQL-based DB access library for Scala developers
+  * 官方文档例子学习
+    1. [IndexExample](https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/IndexExample.scala)
+    2. [ConfigExample](https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/ConfigExample.scala)
+    3. [ConnectionPoolExample](https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/ConnectionPoolExample.scala)
+    4. [OperationExample](https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/OperationExample.scala)
