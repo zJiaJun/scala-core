@@ -100,14 +100,14 @@ object OperationExample extends App with LazyLogging {
 
   case class MemberId(id: Long)
   def usingParameterBinder(): Unit = {
-    val memberId = MemberId(1L)
+    val memberId = MemberId(2L)
     val memberIdParameterBinder =
       ParameterBinder(value = memberId, binder = (stmt: PreparedStatement, idx: Int) => stmt.setLong(idx, memberId.id))
 
-    val idResult = DB readOnly { implicit session =>
-      sql"select id from members where id = $memberId".map(_.long("id")).single().apply()
+    val name: Option[String] = DB readOnly { implicit session =>
+      sql"select name from members where id = $memberIdParameterBinder".map(_.string("name")).single().apply()
     }
-    logger.info(s"usingParameterBinder, $idResult")
+    logger.info(s"usingParameterBinder, $name")
   }
 
   def usingTypeBinder(): Unit = {
