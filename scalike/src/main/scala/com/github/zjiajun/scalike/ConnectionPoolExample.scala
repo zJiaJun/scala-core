@@ -87,7 +87,7 @@ object ConnectionPoolExample extends App with LazyLogging {
     3.连接池settings设置connectionPoolFactoryName属性, 即上部注册的名称
 
     第二种
-    1.实现ConnectionPoolFactory 特质， 实现ConnectionPool 抽象类(和第一部一样)
+    1.实现ConnectionPoolFactory 特质， 实现ConnectionPool 抽象类(和第一种一样)
     2.声明隐式ConnectionPoolFactory
     3.初始化时,会自动传入到singleton或add方法中
 
