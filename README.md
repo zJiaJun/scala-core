@@ -12,6 +12,30 @@
   
 ## checkStyle
    * 使用[scalafmt](https://scalameta.org/scalafmt/)和[spotless](https://github.com/diffplug/spotless/tree/main/plugin-gradle#scalafmt)统一编码风格
+   
+   <details><summary>setup with gradle plugin</summary>
+   
+   ```gradle
+   buildscript {
+    dependencies {
+   		classpath "com.diffplug.spotless:spotless-plugin-gradle:$versions.spotlessPlugin"
+   	}
+   }
+   
+   apply plugin: "com.diffplug.gradle.spotless"
+   spotless {
+   	scala {
+   		target '**/*.scala'
+   		scalafmt("$versions.scalafmt").configFile('checkstyle/.scalafmt.conf')
+   	}
+   }
+   ```
+
+    spotlessPlugin.version = 3.28.1
+    scalafmt.version = 1.5.1
+    具体请看build.gradle和dependencies.gradle
+   </details>
+
     
 ## core
   * 一些学习和研究scala过程中的例子
