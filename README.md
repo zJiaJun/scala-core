@@ -15,7 +15,7 @@
    
    * <details><summary>setup with gradle plugin</summary>
    
-        ```gradle
+        ```scala
         buildscript {
         dependencies {
             classpath "com.diffplug.spotless:spotless-plugin-gradle:$versions.spotlessPlugin"
@@ -31,9 +31,11 @@
         }
         ```
         
+        ```scala
         spotlessPlugin.version = 3.28.1
         scalafmt.version = 1.5.1
         具体请看build.gradle和dependencies.gradle
+        ```
     </details>
 
     
