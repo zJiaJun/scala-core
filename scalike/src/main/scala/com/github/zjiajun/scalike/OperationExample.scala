@@ -1,6 +1,7 @@
 package com.github.zjiajun.scalike
 
 import java.sql.{PreparedStatement, ResultSet}
+import java.util.Date
 
 import com.github.zjiajun.scalike.entity._
 import com.typesafe.scalalogging.LazyLogging
@@ -17,22 +18,25 @@ import scalikejdbc._
 object OperationExample extends App with LazyLogging {
 
   initHikariConnectionPool()
-//  usingSingleSimple(1L)
-//  usingDefineMapper(2L)
-//  usingDefineClass(3L)
-//  usingQueryDSl(1L)
-//  usingFirstResult()
-//  usingListResult()
-//  usingForeachResult()
+  usingSingleSimple(1L)
+  usingDefineMapper(2L)
+  usingDefineClass(3L)
+  usingQueryDSl(1L)
+  usingFirstResult()
+  usingListResult()
+  usingForeachResult()
   usingParameterBinder()
-//  usingTypeBinder()
+  usingTypeBinder()
+  usingUpdateWithTx()
+  usingDSLUpdateWithTx()
+  usingBatchInsert()
 
   def initHikariConnectionPool(): Unit = {
     val hikariConfig = new HikariConfig()
     hikariConfig.setJdbcUrl(url)
     hikariConfig.setUsername(user)
     hikariConfig.setPassword(password)
-    hikariConfig.setMaximumPoolSize(10)
+    hikariConfig.setMaximumPoolSize(5)
     hikariConfig.setConnectionTimeout(3000L)
     hikariConfig.setPoolName("scalikejdbc-hikari-pool")
     val hikariDataSource = new HikariDataSource(hikariConfig)
@@ -99,6 +103,7 @@ object OperationExample extends App with LazyLogging {
     }
 
   case class MemberId(id: Long)
+
   def usingParameterBinder(): Unit = {
     val memberId = MemberId(2L)
     val memberIdParameterBinder =
@@ -121,5 +126,71 @@ object OperationExample extends App with LazyLogging {
       sql"select id from members".map(_.get[MemberId]("id")).list().apply()
     }
     logger.info(s"usingTypeBinder, $memberIds")
+  }
+
+  def usingUpdateWithTx(): Unit = {
+    val name = "Leon"
+    DB localTx { implicit session =>
+      sql"insert into members(name, created_at) values ($name, now())".update.apply()
+      val newId: Long =
+        sql"""insert into members(name, created_at) 
+            values (${"new" + name}, now())""".updateAndReturnGeneratedKey.apply()
+      sql"update members set name=${"update" + name} where id = $newId".update.apply()
+      sql"delete from members where id = $newId".update.apply()
+    }
+  }
+
+  def usingDSLUpdateWithTx(): Unit = {
+    val dslName = "DSL_Leon"
+    val column = Member.column
+    DB localTx { implicit session =>
+      withSQL {
+        insert
+          .into(Member)
+          .namedValues(
+            column.name -> dslName,
+            column.createdAt -> sqls.currentTimestamp
+          )
+      }.update.apply()
+
+      val dslNewId: Long = withSQL {
+        insert
+          .into(Member)
+          .namedValues(column.name -> dslName.concat("_new"), column.createdAt -> sqls.currentTimestamp)
+      }.updateAndReturnGeneratedKey.apply()
+
+      withSQL {
+        update(Member).set(column.name -> dslName.concat("_update")).where.eq(column.id, dslNewId)
+      }.update.apply()
+
+      withSQL {
+        delete.from(Member).where.eq(column.id, dslNewId)
+      }.update.apply()
+    }
+  }
+
+  def usingBatchInsert(): Unit = {
+    val sum_1: IndexedSeq[Int] = DB localTx { implicit session =>
+      //      val batchParams: Seq[Seq[Any]] = Seq(List("100", new Date()), List("200", new Date()))
+      val batchParams: Seq[Seq[Any]] = (1 to 3).map(i => Seq(s"batch_$i", new Date()))
+      sql"insert into members(name, created_at) values (?, ?)".batch(batchParams: _*).apply()
+    }
+    logger.info(s"usingBatch batch,$sum_1")
+
+    val sum_2: IndexedSeq[Int] = DB localTx { implicit session =>
+      val batchNameParams =
+        Seq(
+          Seq('name -> "batchName_1", 'createdAt -> new Date()),
+          Seq('name -> "batchName_2", 'createdAt -> new Date())
+        )
+      sql"insert into members(name, created_at) values ({name}, {createdAt})".batchByName(batchNameParams: _*).apply()
+    }
+    logger.info(s"usingBatch batchByName, $sum_2")
+
+    val idKeys: IndexedSeq[Long] = DB localTx { implicit session =>
+      val batchParams: Seq[Seq[Any]] = (1 to 3).map(i => Seq(s"batchAndReturnGeneratedKey_$i", new Date()))
+      sql"insert into members(name, created_at) values (?, ?)".batchAndReturnGeneratedKey(batchParams: _*).apply()
+    }
+    logger.info(s"usingBatch batchAndReturnGeneratedKey $idKeys")
   }
 }
