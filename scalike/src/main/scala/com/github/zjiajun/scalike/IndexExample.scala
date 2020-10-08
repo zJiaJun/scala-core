@@ -18,7 +18,7 @@ object IndexExample extends App with LazyLogging {
 
   sql"""
         create table if not exists members (
-        id int UNSIGNED auto_increment,
+        id int unsigned auto_increment,
         name varchar(64),
         created_at timestamp not null,
         primary key(id)

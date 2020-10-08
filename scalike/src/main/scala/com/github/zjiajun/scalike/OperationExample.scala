@@ -18,6 +18,8 @@ import scalikejdbc._
 object OperationExample extends App with LazyLogging {
 
   initHikariConnectionPool()
+  usingExecute()
+  /*
   usingSingleSimple(1L)
   usingDefineMapper(2L)
   usingDefineClass(3L)
@@ -30,6 +32,7 @@ object OperationExample extends App with LazyLogging {
   usingUpdateWithTx()
   usingDSLUpdateWithTx()
   usingBatchInsert()
+   */
 
   def initHikariConnectionPool(): Unit = {
     val hikariConfig = new HikariConfig()
@@ -168,6 +171,19 @@ object OperationExample extends App with LazyLogging {
       }.update.apply()
     }
   }
+
+  def usingExecute(): Unit =
+    DB autoCommit { implicit session =>
+      sql"""
+            create table if not exists members(
+              id int unsigned auto_increment,
+              name varchar(64),
+              created_at timestamp not null,
+              primary key(id))
+           """.execute.apply()
+
+      sql"alter table members modify name varchar(64) null comment 'name'".execute().apply()
+    }
 
   def usingBatchInsert(): Unit = {
     val sum_1: IndexedSeq[Int] = DB localTx { implicit session =>
