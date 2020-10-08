@@ -17,17 +17,17 @@
    
         ```
         buildscript {
-        dependencies {
-            classpath "com.diffplug.spotless:spotless-plugin-gradle:$versions.spotlessPlugin"
-        }
+            dependencies {
+                classpath "com.diffplug.spotless:spotless-plugin-gradle:$versions.spotlessPlugin"
+            }
         }
         
         apply plugin: "com.diffplug.gradle.spotless"
         spotless {
-        scala {
-            target '**/*.scala'
-            scalafmt("$versions.scalafmt").configFile('checkstyle/.scalafmt.conf')
-        }
+            scala {
+                target '**/*.scala'
+                scalafmt("$versions.scalafmt").configFile('checkstyle/.scalafmt.conf')
+            }
         }
         ```
         
