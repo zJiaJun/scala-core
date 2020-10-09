@@ -21,7 +21,7 @@ object OperationExample extends App with LazyLogging {
   usingSingleSimple(1L)
   usingDefineMapper(2L)
   usingDefineClass(3L)
-  usingQueryDSl(1L)
+  usingQueryDSL(1L)
   usingFirstResult()
   usingListResult()
   usingForeachResult()
@@ -56,7 +56,7 @@ object OperationExample extends App with LazyLogging {
     logger.info(s"usingDefineClass, $member")
   }
 
-  def usingQueryDSl(id: Long): Unit = {
+  def usingQueryDSL(id: Long): Unit = {
     val m = Member.syntax("m")
     val member: Option[Member] = DB readOnly { implicit session =>
       withSQL {
