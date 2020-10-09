@@ -5,7 +5,6 @@ import java.util.Date
 
 import com.github.zjiajun.scalike.entity._
 import com.typesafe.scalalogging.LazyLogging
-import com.zaxxer.hikari.{HikariConfig, HikariDataSource}
 import scalikejdbc._
 
 /**
@@ -31,18 +30,6 @@ object OperationExample extends App with LazyLogging {
   usingUpdateWithTx()
   usingDSLUpdateWithTx()
   usingBatchInsert()
-
-  def initHikariConnectionPool(): Unit = {
-    val hikariConfig = new HikariConfig()
-    hikariConfig.setJdbcUrl(url)
-    hikariConfig.setUsername(user)
-    hikariConfig.setPassword(password)
-    hikariConfig.setMaximumPoolSize(5)
-    hikariConfig.setConnectionTimeout(3000L)
-    hikariConfig.setPoolName("scalikejdbc-hikari-pool")
-    val hikariDataSource = new HikariDataSource(hikariConfig)
-    ConnectionPool.singleton(new DataSourceConnectionPool(hikariDataSource))
-  }
 
   def usingSingleSimple(id: Long): Unit = {
     val nameOpt: Option[String] = DB readOnly { implicit session =>
