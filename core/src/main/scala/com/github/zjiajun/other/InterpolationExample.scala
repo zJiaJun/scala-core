@@ -25,9 +25,11 @@ object InterpolationExample extends App {
   implicit class DateInterpolation(val sc: StringContext) extends AnyVal {
     def date(args: Any*): LocalDateTime = {
       if (args.size != 6) throw new RuntimeException("parameter must be 6")
-      args.foreach(p => if (!p.isInstanceOf[Int]) throw new RuntimeException("parameter must be Int type"))
-      val date: Seq[Int] = args.map(_.asInstanceOf[Int])
-      LocalDateTime.of(date(0), date(1), date(2), date(3), date(4), date(5))
+      val dateSeq: Seq[Int] = args.map {
+        case d: Int => d.toInt
+        case _      => throw new RuntimeException("parameter must be Int type")
+      }
+      LocalDateTime.of(dateSeq(0), dateSeq(1), dateSeq(2), dateSeq(3), dateSeq(4), dateSeq(5))
     }
   }
 
