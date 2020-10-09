@@ -108,3 +108,16 @@ project/plugins/project/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+### JEnv template
+# JEnv local Java version configuration file
+.java-version
+
+# Used by previous versions of JEnv
+.jenv-version
+
+### Redis template
+# Ignore redis binary dump (dump.rdb) files
+
+*.rdb
+
+
