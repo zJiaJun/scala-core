@@ -5,9 +5,9 @@ import scalikejdbc._
 import scalikejdbc.config.{DBs, DBsWithEnv}
 
 /**
-  *@author zhujiajun
-  *@version 1.0
-  *@since 2020/10/7 12:53
+  * @author zhujiajun
+  * @version 1.0
+  * @since 2020/10/7 12:53
   *
   * use scalikejdbc-config, load application.conf
   *

@@ -8,9 +8,9 @@ import com.typesafe.scalalogging.LazyLogging
 import scalikejdbc._
 
 /**
-  *@author zhujiajun
-  *@version 1.0
-  *@since 2020/10/8 14:06
+  * @author zhujiajun
+  * @version 1.0
+  * @since 2020/10/8 14:06
   *
   * @see [[http://scalikejdbc.org/documentation/operations.html]]
   */

@@ -4,9 +4,9 @@ import com.zaxxer.hikari.{HikariConfig, HikariDataSource}
 import scalikejdbc.{ConnectionPool, DataSourceConnectionPool}
 
 /**
- * @author zhujiajun
- * @version 1.0
- * @since 2020/10/8 14:13
+  * @author zhujiajun
+  * @version 1.0
+  * @since 2020/10/8 14:13
   */
 package object scalike {
 
