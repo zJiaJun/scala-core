@@ -4,10 +4,10 @@ version = 1.0
 buildscript {
 	repositories {
 		mavenLocal()
-		mavenCentral()
 		maven {
 			url "http://maven.aliyun.com/nexus/content/groups/public"
 		}
+		mavenCentral()
 	}
 	apply from: "$rootDir/gradle/dependencies.gradle"
 
@@ -26,6 +26,7 @@ spotless {
 
 
 tasks.named('wrapper') {
+	gradleVersion = '6.5'
 	distributionType = Wrapper.DistributionType.ALL
 }
 

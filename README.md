@@ -6,9 +6,12 @@
   * gradle 6.5
   
 ## 使用
+
+  ```
   1. git clone git@github.com:zJiaJun/scala-core.git
   2. cd scala-core
   3. ./gradlew build
+  ```
   
 ## checkStyle
    * 使用[scalafmt](https://scalameta.org/scalafmt/)和[spotless](https://github.com/diffplug/spotless/tree/main/plugin-gradle#scalafmt)统一编码风格

@@ -19,7 +19,6 @@ object OperationExample extends App with LazyLogging {
 
   initHikariConnectionPool()
   usingExecute()
-  /*
   usingSingleSimple(1L)
   usingDefineMapper(2L)
   usingDefineClass(3L)
@@ -32,7 +31,6 @@ object OperationExample extends App with LazyLogging {
   usingUpdateWithTx()
   usingDSLUpdateWithTx()
   usingBatchInsert()
-   */
 
   def initHikariConnectionPool(): Unit = {
     val hikariConfig = new HikariConfig()
