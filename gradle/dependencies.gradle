@@ -3,12 +3,11 @@ ext {
     libs = [:]
 }
 
-def defaultScala212Version = '2.12.11'
+def defaultScala212Version = '2.12.12'
 versions["scala"] = defaultScala212Version
 versions["baseScala"] = versions.scala.substring(0, versions.scala.lastIndexOf("."))
 
 versions += [
-        scala: "2.12.11",
         slf4j: "1.7.30",
         scalaLogging: "3.9.2",
         scalatest: "3.0.8",

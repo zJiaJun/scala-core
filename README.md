@@ -2,8 +2,9 @@
 
 ## 环境
   * java 1.8
-  * scala 2.12.11
+  * scala 2.12.12
   * gradle 6.5
+  * scalikejdbc 3.5.0
   
 ## 使用
 
