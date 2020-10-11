@@ -26,4 +26,14 @@ object Member extends SQLSyntaxSupport[Member] {
     Member(id = id, name = name, createdAt = createdAt)
   }
 
+  def usingDSLCreate(name: String, createdAt: Date)(implicit session: DBSession): Member = {
+    val id = applyUpdateAndReturnGeneratedKey {
+      insert.into(this).namedValues(
+        column.name -> name,
+        column.createdAt -> createdAt
+      )
+    }
+    Member(id = id, name = name, createdAt = createdAt)
+  }
+
 }

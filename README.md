@@ -1,4 +1,4 @@
-# Scala 技术栈
+# Scala ecosystem
 
 ## 环境
   * java 1.8
