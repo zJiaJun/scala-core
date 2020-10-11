@@ -88,21 +88,21 @@ object ArrayDemo extends App {
   println(matrix(1).mkString("-")) //4-0-0
 
   //JavaConversions is deprecated, since 2.12.0, use JavaConverters
-  import scala.collection.JavaConversions.bufferAsJavaList //buffer转javaList
+  import scala.collection.JavaConverters._ //buffer转javaList
   import scala.collection.mutable.ArrayBuffer
   val command = ArrayBuffer("ls", "-all", "/")
   /* 构建java原生的List
   val list = new java.util.ArrayList[String]()
   list.add("jps")
    */
-  val pb = new ProcessBuilder(command) //入参是List[String],ArrayBuffer被隐式转换成java的List
+  val pb = new ProcessBuilder(command.asJava) //入参是List[String],ArrayBuffer被隐式转换成java的List
   val process = pb.start()
   val stream = Source.fromInputStream(process.getInputStream, "UTF-8")
   println(stream.mkString)
 
-  import scala.collection.JavaConversions.asScalaBuffer //返回List,自动转换成一个Buffer,注意不是ArrayBuffer
+   //返回List,自动转换成一个Buffer,注意不是ArrayBuffer
   import scala.collection.mutable.Buffer
-  val buffer: Buffer[String] = pb.command() //return List[String] => Buffer[String]
+  val buffer: Buffer[String] = pb.command().asScala //return List[String] => Buffer[String]
   println(buffer.mkString)
 
 }

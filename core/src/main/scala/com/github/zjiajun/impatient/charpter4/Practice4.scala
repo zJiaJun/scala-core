@@ -15,8 +15,8 @@ object Practice4 extends App {
     for ((k, v) <- map) yield (k, v * 0.9)
 
   def practiceSeven() = {
-    import scala.collection.JavaConversions.propertiesAsScalaMap
-    val props: scala.collection.Map[String, String] = System.getProperties
+    import scala.collection.JavaConverters._
+    val props: scala.collection.Map[String, String] = System.getProperties.asScala
     val keys = props.keySet
     println(keys)
     val keyLengths = for (key <- keys) yield key.length
