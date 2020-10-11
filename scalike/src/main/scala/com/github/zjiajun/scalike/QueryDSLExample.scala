@@ -25,7 +25,7 @@ object QueryDSLExample extends App with LazyLogging {
   usingDelete()
   usingUpdate()
   usingInsert()
-//  usingInertSelect()
+  usingInertSelect()
 
 
   def usingSimpleDSL(): Unit = {
@@ -114,6 +114,12 @@ object QueryDSLExample extends App with LazyLogging {
         .single
         .apply()
       logger.info(s"usingCountDistinct, $memberCount")
+
+      val inClauseMember = withSQL {
+        select.from(Member as m).where.in(m.id, (1 to 3))
+      }.map(Member(m.resultName)).list.apply()
+      logger.info(s"usingInClause, $inClauseMember")
+
     }
 
   def usingDelete(): Unit = {
