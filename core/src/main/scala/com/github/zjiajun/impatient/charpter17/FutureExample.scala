@@ -40,6 +40,8 @@ object FutureExample extends App with LazyLogging {
     val result = Await.result(f, 5.seconds)
     logger.info(s"waitResultFuture, $result")
   }
+
+  //Await.result方法中,如果任务抛出异常, result调用会抛出异常,使用ready方法避免.同样不推荐
   def waitReadFuture(): Unit = {
     val f = Future {
       Thread sleep 3000
