@@ -45,7 +45,7 @@ object FutureExample extends App with LazyLogging {
   //Await.result方法中,如果任务抛出异常, result调用会抛出异常,使用ready方法避免.同样不推荐
   def waitReadyFuture(): Unit = {
     val f = Future {
-      Thread sleep 3000
+      Thread sleep 2000
 //      1 / 0
       100
     }
@@ -122,14 +122,43 @@ object FutureExample extends App with LazyLogging {
     }
   }
 
-//  runInFuture()
-//  multiFuture()
-//  waitResultFuture()
-//  waitReadyFuture()
-//  callbackFuture()
-//  callbackHellFuture()
-//  combinedFuture()
+  //将异常转换结果
+  def recoverFuture(): Unit = {
+    val f = Future { Thread sleep 2000; 1 / 0 }
+    val f1 = f.recover {
+      case e: ArithmeticException => logger.info(s"recoverFuture exception, ${e.getMessage}"); 0
+    }
+    f1.foreach(v => logger.info(s"recoverFuture, $v"))
+
+    val f2 = f.recoverWith {
+      case e: ArithmeticException => logger.info(s"recoverWithFuture exception, ${e.getMessage}"); Future { 5 }
+    }
+    f2.foreach(v => logger.info(s"recoverWithFuture, $v"))
+  }
+
+  //拉链操作
+  def zipFuture(): Unit = {
+    val f1 = Future { 2 }
+    val f2 = Future { 4 }
+    val zipFuture: Future[(Int, Int)] = f1.zip(f2)
+    zipFuture.foreach(z => logger.info(s"zipFuture, $z"))
+
+    val future = f1.zipWith(f2) { (v1, v2) =>
+      v1 + v2
+    } // 等于 f1.zipWith(f2)(_ + _)
+    future.foreach(v => logger.info(s"zipFutureWith, $v"))
+  }
+
+  runInFuture()
+  multiFuture()
+  waitResultFuture()
+  waitReadyFuture()
+  callbackFuture()
+  callbackHellFuture()
+  combinedFuture()
   lazyFuture()
+  recoverFuture()
+  zipFuture()
 
   new CountDownLatch(1).await()
 }
