@@ -1,11 +1,12 @@
 package com.github.zjiajun.impatient.charpter17
 
 import java.time.LocalTime
-import java.util.concurrent.CountDownLatch
+import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.{ArrayBlockingQueue, CountDownLatch, ThreadFactory, ThreadPoolExecutor, TimeUnit}
 
 import com.typesafe.scalalogging.LazyLogging
 
-import scala.concurrent.{Await, Future}
+import scala.concurrent.{Await, ExecutionContext, ExecutionContextExecutor, Future}
 import scala.math.random
 import scala.util.{Failure, Success}
 
@@ -149,6 +150,27 @@ object FutureExample extends App with LazyLogging {
     future.foreach(v => logger.info(s"zipFutureWith, $v"))
   }
 
+  //自定义执行上下文 线程池，不使用默认的ExecutionContext.Implicits.global ForkJoinPool
+  def executionContextFuture(): Unit = {
+    val poolSize = Runtime.getRuntime.availableProcessors
+    val executor =
+      new ThreadPoolExecutor(poolSize, poolSize, 10L, TimeUnit.SECONDS, new ArrayBlockingQueue[Runnable](50), new ThreadFactory {
+
+        val threadNumber = new AtomicInteger(1)
+
+        override def newThread(r: Runnable): Thread = {
+          val thread = new Thread(r)
+          thread.setDaemon(false)
+          thread.setPriority(Thread.NORM_PRIORITY)
+          thread.setName(s"simple-pool-thread-${threadNumber.getAndIncrement()}")
+          thread
+        }
+      })
+    implicit val contextExecutor: ExecutionContextExecutor = ExecutionContext.fromExecutor(executor)
+    val f = Future { Thread sleep 1000; "executor" }
+    f.foreach(v => logger.info(s"executionContextFuture, $v"))
+  }
+
   runInFuture()
   multiFuture()
   waitResultFuture()
@@ -159,6 +181,7 @@ object FutureExample extends App with LazyLogging {
   lazyFuture()
   recoverFuture()
   zipFuture()
+  executionContextFuture()
 
   new CountDownLatch(1).await()
 }
