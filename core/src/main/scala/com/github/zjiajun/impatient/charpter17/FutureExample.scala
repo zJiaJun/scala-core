@@ -150,27 +150,47 @@ object FutureExample extends App with LazyLogging {
     future.foreach(v => logger.info(s"zipFutureWith, $v"))
   }
 
+  def sequenceFuture(): Unit = {
+    val futures = List(1, 2, 3).map(x => Future { x * 2 })
+    val eventualList = Future.sequence(futures)
+
+    eventualList.foreach(v => logger.info(s"sequence, $v"))
+    val result = Future.traverse(List(1, 2, 3)) { p =>
+      Future { p * 3 }
+    }
+    result.foreach(v => logger.info(s"traverse, $v"))
+
+  }
+
   //自定义执行上下文 线程池，不使用默认的ExecutionContext.Implicits.global ForkJoinPool
   def executionContextFuture(): Unit = {
     val poolSize = Runtime.getRuntime.availableProcessors
     val executor =
-      new ThreadPoolExecutor(poolSize, poolSize, 10L, TimeUnit.SECONDS, new ArrayBlockingQueue[Runnable](50), new ThreadFactory {
+      new ThreadPoolExecutor(
+        poolSize,
+        poolSize,
+        10L,
+        TimeUnit.SECONDS,
+        new ArrayBlockingQueue[Runnable](50),
+        new ThreadFactory {
 
-        val threadNumber = new AtomicInteger(1)
+          val threadNumber = new AtomicInteger(1)
 
-        override def newThread(r: Runnable): Thread = {
-          val thread = new Thread(r)
-          thread.setDaemon(false)
-          thread.setPriority(Thread.NORM_PRIORITY)
-          thread.setName(s"simple-pool-thread-${threadNumber.getAndIncrement()}")
-          thread
+          override def newThread(r: Runnable): Thread = {
+            val thread = new Thread(r)
+            thread.setDaemon(false)
+            thread.setPriority(Thread.NORM_PRIORITY)
+            thread.setName(s"simple-pool-thread-${threadNumber.getAndIncrement()}")
+            thread
+          }
         }
-      })
+      )
     implicit val contextExecutor: ExecutionContextExecutor = ExecutionContext.fromExecutor(executor)
     val f = Future { Thread sleep 1000; "executor" }
     f.foreach(v => logger.info(s"executionContextFuture, $v"))
   }
 
+  /*
   runInFuture()
   multiFuture()
   waitResultFuture()
@@ -182,6 +202,8 @@ object FutureExample extends App with LazyLogging {
   recoverFuture()
   zipFuture()
   executionContextFuture()
+   */
+  sequenceFuture()
 
   new CountDownLatch(1).await()
 }
