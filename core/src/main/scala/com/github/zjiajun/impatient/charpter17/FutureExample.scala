@@ -97,7 +97,7 @@ object FutureExample extends App with LazyLogging {
     logger.info(s"combinedFuture_1, $combined_1")
 
     val combined_2 = for (v1 <- f1; v2 <- f2) yield v1 + v2
-    logger.info(s"combinedFuture_2, $combined_1")
+    logger.info(s"combinedFuture_2, $combined_2")
   }
 
   //某个任务安排在另外一个任务之后运行,使用def, 而不是val
