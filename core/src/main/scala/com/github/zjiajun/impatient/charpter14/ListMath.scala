@@ -9,16 +9,29 @@ import com.typesafe.scalalogging.LazyLogging
   */
 object ListMath extends App with LazyLogging {
 
-  val list = List(1000, 2000, 3000)
+  val list = List(10,20,30)
 
-  def listMatch(list: List[Int]): Unit =
+  //中置表示法
+  def listMatch(): Unit = {
     list match {
       case 0 :: Nil      => logger.info("0")
       case x :: y :: Nil => logger.info(s"$x, $y")
-      case 0 :: tail     => logger.info(tail.mkString(","))
+      case x :: tail     => logger.info(s"$x, ${tail.mkString(",")}")
       case _             => logger.info("anything")
     }
+  }
 
-  listMatch(list)
+  listMatch()
+
+  //普通case匹配, :: 其实就是case class
+  def middleMatch(): Unit = {
+    list match {
+      case ::(0, Nil) => logger.info(s"middle, 0")
+      case ::(x, ::(y, Nil)) => logger.info(s"middle, $x, $y")
+      case ::(x, tail) => logger.info(s"middle, $x, ${tail.mkString(",")}")
+      case _ => logger.info(s"middle, anything")
+    }
+  }
+  middleMatch()
 
 }
