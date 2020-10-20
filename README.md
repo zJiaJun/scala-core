@@ -49,12 +49,12 @@
 ## scalike
   * A tidy SQL-based DB access library for Scala developers
   * <details><summary>官方文档例子学习</summary>
-    1.<a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/IndexExample.scala" target="_blank">IndexExample</a><br>
-    2.<a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/ConfigExample.scala" target="_blank">ConfigExample</a><br>
-    3.<a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/ConnectionPoolExample.scala" target="_blank">ConnectionPoolExample</a><br>
-    4.<a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/OperationExample.scala" target="_blank">OperationExample</a><br>
-    5.<a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/TransactionExample.scala" target="_blank">TransactionExample</a><br>
-    6.<a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/AutoSessionExample.scala" target="_blank">AutoSessionExample</a><br>
-    7.<a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/SQLInterpolationExample.scala" target="_blank">SQLInterpolationExample</a><br>
-    8.<a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/QueryDSLExample.scala" target="_blank">QueryDSLExample</a><br>
+    1. <a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/IndexExample.scala" target="_blank">IndexExample</a><br>
+    2. <a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/ConfigExample.scala" target="_blank">ConfigExample</a><br>
+    3. <a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/ConnectionPoolExample.scala" target="_blank">ConnectionPoolExample</a><br>
+    4. <a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/OperationExample.scala" target="_blank">OperationExample</a><br>
+    5. <a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/TransactionExample.scala" target="_blank">TransactionExample</a><br>
+    6. <a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/AutoSessionExample.scala" target="_blank">AutoSessionExample</a><br>
+    7. <a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/SQLInterpolationExample.scala" target="_blank">SQLInterpolationExample</a><br>
+    8. <a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/QueryDSLExample.scala" target="_blank">QueryDSLExample</a><br>
   </details>
