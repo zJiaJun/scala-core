@@ -49,7 +49,7 @@
 ## scalike
   * A tidy SQL-based DB access library for Scala developers
   * <details><summary>官方文档例子学习</summary>
-    1.[IndexExample](https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/IndexExample.scala)<br>
+    1.<a href="https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/IndexExample.scala" target="_blank">IndexExample</a><br>
     2.[ConfigExample](https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/ConfigExample.scala)<br>
     3.[ConnectionPoolExample](https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/ConnectionPoolExample.scala)<br>
     4.[OperationExample](https://github.com/zjiajun/scala-core/blob/master/scalike/src/main/scala/com/github/zjiajun/scalike/OperationExample.scala)<br>
