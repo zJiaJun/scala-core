@@ -25,11 +25,14 @@ class ScalaObject(@BeanProperty var pValue: Int = 2) extends PrivateObj(1) {
 
   def value = pValue
 
-  def value_=(newValue: Int): Unit =
+  def value_=(newValue: Int): Unit = {
     if (newValue > pValue) pValue = newValue
+  }
 
-  def increment(): Unit =
+  def increment(): Unit = {
     value += 1
+  }
+
   def current = value
 
   def this(pValue: Int, s: String) {
